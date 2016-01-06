@@ -1,4 +1,7 @@
 # 72.
+# make sure len(l1) < len(l2)
+# strip common prefix and suffix
+# take out each element from l2 and repeat
 class Solution(object):
     def minDistance(self, word1, word2):
         """
