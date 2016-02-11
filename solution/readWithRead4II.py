@@ -13,4 +13,4 @@ class Solution(object):
         :type n: Maximum number of characters to read (int)
         :rtype: The number of characters read (int)
         """
-        
+        pass
