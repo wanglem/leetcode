@@ -1,7 +1,7 @@
 # 171. excel column title to number
 # A -> 1, AB -> 28, AA -> 27
 # base 26 translation
-# 
+# ACB -> 1*pow(26, 2) + 3*pow(26,1) + 2*pow(26, 0)
 class Solution(object):
     def titleToNumber(self, s):
         """
