@@ -13,3 +13,12 @@ sum 等差数列
       2
 
 
+Buy and Sell Stocks
+Q: List of Double nums, means that at time i the stock price is nums[i]
+1. 	First we can simply this question, whenever buy or sell, we care about valley and crest, (波峰和波谷)
+	so that: [2,5,9,4,1,6,7] -> [2,9,1,7]
+2.	if we can only buy and sell one, we need find the map gap
+	key is to keep track of MINIMUM BUY and MAX PROFIT.
+3.	if can buy/sell multiple times, need to find max profit combinations
+	Haven't figure out a good solution, maybe start with biggest gap and with k gaps and compare total profits? like max(sum[0-k], sum[1-k+1] ...).
+
