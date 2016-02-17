@@ -22,3 +22,26 @@ Q: List of Double nums, means that at time i the stock price is nums[i]
 3.	if can buy/sell multiple times, need to find max profit combinations
 	Haven't figure out a good solution, maybe start with biggest gap and with k gaps and compare total profits? like max(sum[0-k], sum[1-k+1] ...).
 
+
+Quick Selection (Find the Kth smallest element)
+Similar to Quick sort, use a pivot and partition the list into 2 part, then only go to one of those. This can reduce time complexity from O(nLogn) to O(n). Worst is still O(n^2).
+
+Suffix Tree:
+All suffix of a string is a path in suffix tree. Adjacent chars all compressed together unless it's an end. So all nodes will have two/three children or None.
+Use Case: 
+	1. find longest repeated substring. (root to farthest INTERNAL node path)
+	2. 
+
+Longest Common Substring:
+Can use DP, N*M array, for each i in N compare to j in M, if match, dp[i][j] = dp[i-1][j-1]+1 (previous # of chars matched). For example:
+  A B A B
+B 0	1 0 1
+A 1 0 2 0
+B 0 2 0 3
+A 1 0 3 0
+we have two 3s. So that the end char and length go back.
+
+Boyer-Moore
+Bad Char: store last occurance of each char, jump offset to that char when first not match. skip all if not found, shift one if negative. Basically:
+s += max(1, j - badchar[txt[s+j]]);
+j is matching shifted, badchar returns either -1 when not found, or last seen index
