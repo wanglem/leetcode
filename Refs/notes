@@ -45,3 +45,19 @@ Boyer-Moore
 Bad Char: store last occurance of each char, jump offset to that char when first not match. skip all if not found, shift one if negative. Basically:
 s += max(1, j - badchar[txt[s+j]]);
 j is matching shifted, badchar returns either -1 when not found, or last seen index
+
+Edge Rank:
+1. Affinity Score
+2. Edge Weight
+3. Time Decay
+
+Consistent Hashing (Partial)
+How it works:
+Ring that holds N nodes, each nodes responsible for a range.
+Hash function transform key to Int, falls into one range and find that node.
+	Remove node, if will fall under adjacent node.
+	Add new node, will shift data from adjacent node to new node.
+Using VNode:
+Each physical node can have multiple vnode, which represent a range
+	Alleviate hotspot issue (not evenly distributed key)
+	
