@@ -24,3 +24,14 @@ def qs2(L, lo, hi):
 	pivotIndex = partition(L, lo, hi)
 	qs2(L, lo, pivotIndex-1)
 	qs2(L, pivotIndex+1, hi)
+
+def bsearch(nums, target):
+	lo, hi = 0, len(nums)
+	while lo < hi:
+		mid = (hi-lo)/2+lo
+		if target == nums[mid]: return True
+		if target > nums[mid]: lo = mid+1
+		else: hi = mid
+	return False
+
+print bsearch([1,3,4,5,7,8,9], 9)
