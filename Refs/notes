@@ -61,3 +61,19 @@ Using VNode:
 Each physical node can have multiple vnode, which represent a range
 	Alleviate hotspot issue (not evenly distributed key)
 	
+Topological Sorting
+Not necessarily has a unique order
+For example graph:
+5 -> 2 -> 3 -> 1
+5 -> 0
+4 -> 0
+4 -> 1
+5,4,2,3,1,0 is one, 4,5,2,3,1,0 is another one.
+Similar as DFS, need push all child vertices to a stack then push current node. Also 
+need use a hashmap to make sure not re-visit any node.
+e.g.
+start from 5, push all children to stack: [1,3,2,0]
+push 5 itself: [1,3,2,0,5]
+next is 4, push all children, 0 and 1 is visited so skip
+push 4 itself: [1,3,2,0,5,4]
+Also correct if start from 4 then 5.
