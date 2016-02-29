@@ -30,7 +30,7 @@ Suffix Tree:
 All suffix of a string is a path in suffix tree. Adjacent chars all compressed together unless it's an end. So all nodes will have two/three children or None.
 Use Case: 
 	1. find longest repeated substring. (root to farthest INTERNAL node path)
-	2. 
+	2. longest palindrome substring
 
 Longest Common Substring:
 Can use DP, N*M array, for each i in N compare to j in M, if match, dp[i][j] = dp[i-1][j-1]+1 (previous # of chars matched). For example:
