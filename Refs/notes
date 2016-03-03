@@ -88,3 +88,8 @@ pop(): swap(0, size-1), Heapify Subtree.
 Heapify Subtree:
 1. if left < parent, swap(left, parent), heapify left subtree
 2. if right < parent, swap(right, parent), heapify right subtree
+
+
+DP: 2D DP, dp[i] ususally means from 0 to i max or min something
+    3D DP, dp[i][j] usually means from i to j max or min something.
+    Just remember this as some kind of magic formula.
