@@ -93,3 +93,9 @@ Heapify Subtree:
 DP: 2D DP, dp[i] ususally means from 0 to i max or min something
     3D DP, dp[i][j] usually means from i to j max or min something.
     Just remember this as some kind of magic formula.
+
+
+Distributed System Coordination
+    - Protocals
+        - Paxos: consensus of nodes https://en.wikipedia.org/wiki/Paxos_(computer_science)
+        - Gossip: deal with failures https://en.wikipedia.org/wiki/Gossip_protocol
