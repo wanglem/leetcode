@@ -1,6 +1,5 @@
 import java.util.HashMap;
-
-public class Main {
+class LengthOfLongestSubstring {
     public static int lengthOfLongestSubstring(String s) {
         if (s == null || s.length() == 0) return 0;
         int curLongest = 1, longest = 1;
@@ -27,10 +26,6 @@ public class Main {
             longest = Math.max(curLongest, longest);
         }
         return longest;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(lengthOfLongestSubstring("abcabcbb"));
     }
 }
 
