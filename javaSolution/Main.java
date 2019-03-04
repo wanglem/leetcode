@@ -2,8 +2,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        String[] strs = new String[] {"flower","flow","flight"};
-        p(new LongestCommonPrefix().longestCommonPrefix(strs));
+        int[] strs = new int[] {2,3,6,7};
+        p(new CombinationSum().combinationSum(strs, 7));
 
     }
 
@@ -11,4 +11,3 @@ public class Main {
         System.out.println(x);
     }
 }
-
