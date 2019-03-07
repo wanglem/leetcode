@@ -2,8 +2,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        int[] strs = new int[] {2,3,6,7};
-        p(new CombinationSum().combinationSum(strs, 7));
+        int[] prices = new int[] {1,2,3,4,5};
+        p(new BuySellStockIII().maxProfit(prices));
 
     }
 

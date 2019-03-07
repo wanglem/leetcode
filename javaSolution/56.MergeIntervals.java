@@ -24,7 +24,7 @@ class MergeIntervals {
                 merged.add(cur);
             }
         }
-        Collections.binarySearch(intervals, Comparator.comparing((Interval i) -> i.start));
+//        Collections.binarySearch(intervals, Comparator.comparing((Interval i) -> i.start));
         return merged;
     }
 }
