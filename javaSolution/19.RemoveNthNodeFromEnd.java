@@ -1,4 +1,4 @@
-class Solution {
+class RemoveNthNodeFromEnd {
     class ListNode {
         int val;
         ListNode next;
