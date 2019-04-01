@@ -1,5 +1,9 @@
 import java.util.Arrays;
 
+/*
+    dp[i] means longest at index i
+    two for loop
+ */
 class LongestIncreasingSubsequence {
     public int lengthOfLIS(int[] nums) {
         if (nums.length == 0) return 0;

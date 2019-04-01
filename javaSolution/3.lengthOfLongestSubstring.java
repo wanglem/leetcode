@@ -1,4 +1,6 @@
 import java.util.HashMap;
+import java.util.LinkedList;
+
 class LengthOfLongestSubstring {
     public static int lengthOfLongestSubstring(String s) {
         if (s == null || s.length() == 0) return 0;

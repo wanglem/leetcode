@@ -1,5 +1,5 @@
 // buy K times
-// maxProfit[i][j] means when at most i transactions, maxProfit at i price
+// maxProfit[i][j] means when at most i transactions, maxProfit at j price
 // either 1. Not selling at i: maxProfit[i][j] is maxProfit[i][j-1]
 // either 2. Selling at i: maxProfit[i][j] is prices[j] - prices[k] + maxProfit[i-1][k]
 //                                            where k:[0, j) is the buy point for selling j

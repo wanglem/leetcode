@@ -99,3 +99,8 @@ Distributed System Coordination
     - Protocals
         - Paxos: consensus of nodes https://en.wikipedia.org/wiki/Paxos_(computer_science)
         - Gossip: deal with failures https://en.wikipedia.org/wiki/Gossip_protocol
+
+Quick Select
+ - find Kth largest/smallest number
+ - Quick sort but only partition one side
+ - avg O(n), worst O(n^2)

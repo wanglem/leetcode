@@ -1,6 +1,10 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+/*
+    Keep a queue to track k window
+    when offer `m` to queue, keep popping right when `m` is bigger. This way `m` is always biggest in k window.
+ */
 class SlidingWindowMaximum {
     public int[] maxSlidingWindow(int[] nums, int k) {
         Deque<Integer> maxInK = new ArrayDeque<>();
