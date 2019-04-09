@@ -1,4 +1,4 @@
-class Solution {
+class InvertBinaryTree {
       public class TreeNode {
       int val;
       TreeNode left;

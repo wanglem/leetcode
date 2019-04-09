@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+// repeated of 10-length substring (occur more than once)
 class RepeatedDNASequences {
     public List<String> findRepeatedDnaSequences(String s) {
         HashSet<String> seen = new HashSet<>(), res = new HashSet<>();

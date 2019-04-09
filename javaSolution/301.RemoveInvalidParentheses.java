@@ -1,5 +1,7 @@
 import java.util.*;
 
+// fb
+// find invalidLeft and invalidRight, only try remove invalids instead try removing any
 class RemoveInvalidParentheses {
     public List<String> removeInvalidParentheses(String s) {
         int[] invalid = findInvalid(s);

@@ -1,4 +1,5 @@
 // min coins needed for cache[amount]
+// when we have coinA * 2 > coinB && coinA < coinB, then we need to try out all options
 class CoinChange {
     public int coinChange(int[] coins, int amount) {
         int[] minCoins = new int[amount+1];

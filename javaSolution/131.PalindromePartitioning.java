@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+// split string into parts, all of which are palindrome
+// find all possible splits
 class PalindromePartitioning {
     public List<List<String>> partition(String s) {
         List<List<String>> res = new ArrayList<>();

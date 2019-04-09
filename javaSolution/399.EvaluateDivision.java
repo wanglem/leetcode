@@ -2,7 +2,11 @@
 import java.util.*;
 
 // Google
-
+/*
+    equation is  [a, b], [b, c], value is [1.0, 2.0]
+    query above with random [m, n]
+    DFS
+ */
 /*
         "a/b=2, b/c=3" => "a --2--> b --3--> c"
         so "a/b * b/c" => a->b->c = 2*3 == 6

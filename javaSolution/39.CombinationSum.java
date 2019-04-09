@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
-
+// find all combinations from candidates sum to target
+// candidate can  repeated used
 class CombinationSum {
     List<List<Integer>> combinationSum(int[] candidates, int target) {
         Arrays.sort(candidates);

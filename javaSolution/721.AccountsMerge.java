@@ -1,5 +1,8 @@
 import java.util.*;
 
+// fb
+// merge email accounts
+// not difficult, but hard to write, easy bugs
 class AccountsMerge {
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
         Map<String, Integer> emailToIndex = new HashMap<>();

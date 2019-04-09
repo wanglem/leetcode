@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 /*
     dp[i] means longest at index i
-    two for loop
+    two nest for loop O(n^2)
  */
 class LongestIncreasingSubsequence {
     public int lengthOfLIS(int[] nums) {

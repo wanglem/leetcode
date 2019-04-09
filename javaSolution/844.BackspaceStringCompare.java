@@ -1,5 +1,6 @@
 import java.util.Stack;
 
+// Google
 class BackspaceStringCompare {
     public boolean backspaceCompare(String S, String T) {
         return process(S).equals(process(T));

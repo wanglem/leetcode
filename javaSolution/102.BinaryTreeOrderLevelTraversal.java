@@ -2,6 +2,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
+// return each level of binary tree as a list
 class BinaryTreeOrderLevelTraversal {
     public class TreeNode {
         int val;

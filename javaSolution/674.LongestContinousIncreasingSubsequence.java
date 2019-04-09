@@ -1,6 +1,8 @@
 import java.util.Arrays;
 import java.util.Collections;
 
+//fb
+// ez
 class LongestContinousIncreasingSubsequence {
     public int findLengthOfLCIS(int[] nums) {
         if (nums.length == 0) return 0;

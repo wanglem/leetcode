@@ -1,5 +1,7 @@
 import java.util.*;
 
+// continous substring contains all chars in `t`.
+// sliding window with two pointers
 class MinimumWindowSubstring {
     public String minWindow(String s, String t) {
         // occurrence of char in t, reduce to < 0 of all means a valid substring

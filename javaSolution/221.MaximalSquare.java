@@ -1,6 +1,8 @@
 import java.util.Arrays;
 import java.util.Collections;
 
+// max square only contains '1'
+// dp sizes[i][j] means max square size at i, j
 class MaximalSquare {
     public int maximalSquare(char[][] matrix) {
         if (matrix.length == 0) return 0;

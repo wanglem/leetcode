@@ -2,6 +2,10 @@ import java.util.*;
 
 // Google
 /*
+On a 2D plane, we place stones at some integer coordinate points.  Each coordinate point may have at most one stone.
+Now, a move consists of removing a stone that shares a column or row with another stone on the grid.
+What is the largest possible number of moves we can make? */
+/*
     num island problem.
     1. island means connected positions by same row or same column.
     2. for each island with size K, you can remove K-1 times! (size 1 means 0 remove)

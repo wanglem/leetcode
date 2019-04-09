@@ -2,6 +2,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 // FB
+/*
+    1. build a graph
+    2. start with one node, each layer is a group, mark them 1 or 2.
+    3. return false if existed and conflicted
+ */
 class IsGraphBipartite{
     public boolean isBipartite(int[][] graph) {
         int[] group = new int[graph.length];

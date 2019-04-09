@@ -1,3 +1,10 @@
+//fb
+// find 3 integers sum max of non-overlapping subarray each size with k
+/*
+    1. Basically find [a, b, c]. loop array and say index `i` build the middle one - b
+    2. then find max from [0, i] as a, [i+k, n] as c.
+    3. build presum array and post sum array to speed up step 2.
+ */
 class MaximumSumOf3NonOverlapSubarray {
     public int[] maxSumOfThreeSubarrays(int[] nums, int k) {
         int kArrSize = nums.length - k + 1;

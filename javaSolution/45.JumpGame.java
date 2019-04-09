@@ -1,3 +1,4 @@
+// you can jump maximum of nums[i] at i, try reach the end
 class JumpGame {
 
     public int jump(int[] nums) {

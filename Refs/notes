@@ -104,3 +104,32 @@ Quick Select
  - find Kth largest/smallest number
  - Quick sort but only partition one side
  - avg O(n), worst O(n^2)
+
+ Binary Indexed Tree
+    1. right most 1 bit +1 for update: index += (index & -index)
+    2. right most 1 bit -1 for getSum: index -= (index & -index)
+ - update +
+ - getSum -
+ public void updateBIT(int[] BITree, int n, int index, int value) {
+    index += 1;
+    while (index <= n) {
+        BITree[index] += value;
+        index += index & -index;
+    }
+ }
+
+ public int getSum(int[] BITree, int index) {
+    index = index + 1;
+    int res = 0;
+    while (index > 0) {
+        res += BITree[index];
+        index -= index & -index;
+    }
+ }
+
+Java negative number:
+    1. -1 is all '1' bits
+    2. Use 8 bits to represent 32 int bits for example
+        2a. -1 is 1111 1111
+        2b. -3 is 1111 1101 (-2)
+        2c. so -N is -1-(N-1)

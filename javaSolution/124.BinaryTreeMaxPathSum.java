@@ -1,7 +1,4 @@
-/**
- * Definition for a binary tree node.
-
- */
+// max path sum from any node to another node, no need to pass root
 class BinaryTreeMaxPathSum {
     public class TreeNode {
         int val;

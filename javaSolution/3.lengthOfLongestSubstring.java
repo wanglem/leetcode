@@ -1,6 +1,9 @@
 import java.util.HashMap;
 import java.util.LinkedList;
 
+// Given a string, find the length of the longest substring without repeating characters.
+
+// two pointers
 class LengthOfLongestSubstring {
     public static int lengthOfLongestSubstring(String s) {
         if (s == null || s.length() == 0) return 0;

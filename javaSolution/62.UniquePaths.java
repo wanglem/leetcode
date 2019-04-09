@@ -1,3 +1,4 @@
+// robot, upper left to lower right
 class UniquePaths {
     public int uniquePaths(int m, int n) {
         int[][] numPaths = new int[n][m];

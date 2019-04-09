@@ -1,3 +1,5 @@
+// upper left to lower right, + or - health
+// bottom-up approach, from lower-right to upper-left
 class DungeonGame {
     public int calculateMinimumHP(int[][] dungeon) {
         int m = dungeon.length, n = dungeon[0].length;

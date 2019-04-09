@@ -3,6 +3,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
+// find all root -> leaf paths sum up to `sum`
 class PathSumII {
     public class TreeNode {
         int val;

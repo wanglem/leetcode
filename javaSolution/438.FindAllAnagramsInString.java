@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+// fb
+// find substring which is anagram of p
 class FindAllAnagramsInString {
     public List<Integer> findAnagrams(String s, String p) {
         int window = p.length();

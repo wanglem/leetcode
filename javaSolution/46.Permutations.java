@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// all perm of nums
 class Permutations {
     public List<List<Integer>> permute(int[] nums) {
         if (nums.length == 0) return new ArrayList<>();

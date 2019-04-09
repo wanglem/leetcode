@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.Comparator;
 
+// largest number by concatenating all elements in `nums`
 class LargestNumber {
     private class LargerNumberComparator implements Comparator<String> {
         @Override

@@ -2,6 +2,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 // Google
+/*
+    1. Tree[i] means a type of fruit
+    2. two basket, each with only one type of fruit
+    3. walk through, if cannot pick stop.
+ */
+// sliding window with max of 2 distinct integer problem
+
 class FruitIntoBasket {
     public int totalFruit(int[] tree) {
         if (tree.length < 3) {

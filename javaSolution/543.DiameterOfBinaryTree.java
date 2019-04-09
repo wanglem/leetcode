@@ -1,10 +1,8 @@
 import java.util.Arrays;
 import java.util.Collections;
 
-/**
- * Definition for a binary tree node.
-
- */
+// fb, google
+// longest path between any two nodes
 class DiameterOfBinaryTree {
     public class TreeNode {
         int val;

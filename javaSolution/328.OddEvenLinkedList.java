@@ -1,6 +1,6 @@
-/**
-
- */
+// all odd nodes first, then even ones
+// can keep two list, odd list and even list
+// then concat.
 class OddEvenLinkedList {
     public class ListNode {
       int val;

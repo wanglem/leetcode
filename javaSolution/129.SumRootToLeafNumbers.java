@@ -1,5 +1,7 @@
 import java.util.List;
 
+// each path from root -> leaf is integer, sum up all paths
+// top-down approach
 class SumRootToLeafNumbers {
     public class TreeNode {
         int val;

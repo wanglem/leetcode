@@ -2,6 +2,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /*
+    sliding window k and find max number within each k window
     Keep a queue to track k window
     when offer `m` to queue, keep popping right when `m` is bigger. This way `m` is always biggest in k window.
  */

@@ -2,6 +2,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /*
+    2-D arr, 0 empty, 1 building, 2 obstacle
     1. BFS - first processed must have shortest distance to that point.
     2. keep building count, final position must visited by all buildings.
     3. Edge case of adding build position to queue - add neighbors directly.

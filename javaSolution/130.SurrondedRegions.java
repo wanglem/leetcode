@@ -1,3 +1,4 @@
+// flip all 'O' surrounded by 'X', idea is to pre-mark 'O' connected to boarder
 // start with board to mark board in place
 class SurrondedRegions {
     public void solve(char[][] board) {

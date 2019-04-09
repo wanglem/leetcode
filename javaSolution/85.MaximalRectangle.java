@@ -1,4 +1,8 @@
 // wrong answer, but get the dp point
+/*
+    dp[i][j] is height of 1's at i, j
+    loop through whole matrix and calculate
+ */
 class MaximalRectangle {
     public int maximalRectangle(char[][] matrix) {
         if (matrix.length == 0) return 0;

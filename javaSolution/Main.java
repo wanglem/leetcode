@@ -13,8 +13,7 @@ public class Main {
         double[] f = {2.0, 3.0};
         String[][] g = new String[][] {{"a", "b"}, {"b", "c"}};
         String[][] queries = new String[][] {{"a","c"},{"b","c"},{"a","e"},{"a","a"},{"x","x"}};
-        int z = new SplitArrayLargestSum().splitArray(a, 2);
-        p(z);
+        p("22".compareTo("123"));
     }
 
     private static void print2D(char[][] board) {

@@ -1,3 +1,4 @@
+// root -> leaf sum equals sum
 class HasPathSum {
     public class TreeNode {
         int val;
