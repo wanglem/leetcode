@@ -58,3 +58,5 @@ target/
 
 worksheet.py
 .DS_Store
+
+.idea/
