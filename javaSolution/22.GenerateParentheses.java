@@ -15,6 +15,7 @@ class GenerateParentheses {
         List<String> res = new LinkedList<>();
         if (open < n) {
             List<String> openAns = generate(open + 1, close, n);
+            // think this as further code can assume I added an open curl.
             for (String o: openAns) {
                 res.add("(" + o);
             }
