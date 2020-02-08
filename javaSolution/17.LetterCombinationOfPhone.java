@@ -21,11 +21,10 @@ class LetterCombinationOfPhone {
             return res;
         }
         List<String> headLetters = letterMap.get(digits.substring(0, 1));
-        for (String headLetter : headLetters) {
-            for (String rest : letterCombinations(digits.substring(1))) {
-                res.add(headLetter + rest);
-            }
-        }
+        headLetters.forEach( headLetter ->
+            letterCombinations(digits.substring(1))
+                    .forEach(rest -> res.add(headLetter + rest))
+        );
         return res;
     }
 }
