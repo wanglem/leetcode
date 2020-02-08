@@ -14,31 +14,30 @@ class BSTIterator {
         TreeNode(int x) { val = x; }
     }
 
-    private Deque<Integer> iter = new LinkedList<>();
+    private Stack<TreeNode> buf = new Stack<>();
 
     public BSTIterator(TreeNode root) {
-        Stack<TreeNode> buf = new Stack<>();
-        while(root !=  null || !buf.isEmpty()) {
-            while (root != null) {
-                buf.push(root);
-                root = root.left;
-            }
-            if (!buf.isEmpty()) {
-                root = buf.pop();
-            }
-            iter.offer(root.val);
-            root = root.right;
-        }
+        pushLeft(root);
     }
 
     /** @return the next smallest number */
     public int next() {
-        return iter.pollFirst();
+        TreeNode prev = buf.pop();
+        pushLeft(prev.right);
+        return prev.val;
+
     }
 
     /** @return whether we have a next smallest number */
     public boolean hasNext() {
-        return !iter.isEmpty();
+        return !buf.isEmpty();
+    }
+
+    private void pushLeft(TreeNode node) {
+        while (node != null) {
+            buf.push(node);
+            node = node.left;
+        }
     }
 }
 

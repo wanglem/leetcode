@@ -1,5 +1,7 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 // Given a string, find the length of the longest substring without repeating characters.
 
@@ -31,6 +33,24 @@ class LengthOfLongestSubstring {
             longest = Math.max(curLongest, longest);
         }
         return longest;
+    }
+
+    public int lengthOfLongestSubstring2(String s) {
+        if (s.length() < 1) {
+            return 0;
+        }
+        int left = 0;
+        int minDistinct = 0;
+        Set<Character> seen = new HashSet<>();
+        for (int right = 0; right < s.length(); right++) {
+            while (seen.contains(s.charAt(right))) {
+                seen.remove(s.charAt(left));
+                left++;
+            }
+            seen.add(s.charAt(right));
+            minDistinct = Math.max(minDistinct, seen.size());
+        }
+        return minDistinct;
     }
 }
 
