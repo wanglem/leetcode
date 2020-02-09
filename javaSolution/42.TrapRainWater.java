@@ -34,6 +34,11 @@ class TrapRainWater {
             2. highestFromRight[i] has highest bar from [i, height.length]
             3. water at bar i is: Math.min(highestFromLeft[i], highestFromRight[i]) - height[i]
      */
+    /*
+        DP Solution.
+        1. Keep highestFromLeft[i] for highest height since 0 to i. Similar for highestFromRight[i]
+        2. Water trapped at bar j is: min(highestFromLeft[j], highestFromRight[j]) - height[j]
+     */
     private int trapDP(int[] height) {
         int length = height.length;
         if (length < 3) return 0;

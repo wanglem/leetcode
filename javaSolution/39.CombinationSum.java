@@ -5,29 +5,26 @@ import java.util.Stack;
 // find all combinations from candidates sum to target
 // candidate can  repeated used
 class CombinationSum {
-    List<List<Integer>> combinationSum(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
         Arrays.sort(candidates);
-        return findComSum(candidates, target, 0);
+        return getCombo(candidates, 0, target);
     }
 
-    private List<List<Integer>> findComSum(int[] candidates, int target, int index) {
-        ArrayList<List<Integer>> res = new ArrayList<>();
-        if (candidates[index] > target) {
+    private List<List<Integer>> getCombo(int[] candidates, int start, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (candidates[start] > target) {
             return res;
         }
-        if (candidates[index] == target) {
-            ArrayList<Integer> arr = new ArrayList<>();
-            arr.add(candidates[index]);
-            res.add(arr);
-            return res;
-        }
-
-        for (int i = index; i < candidates.length; i++) {
-            List<List<Integer>> childSolutions = findComSum(candidates, target - candidates[i], i);
-            for (List<Integer> childSolution: childSolutions) {
-                List<Integer> cur = new ArrayList<>(childSolution);
-                cur.add(candidates[i]);
-                res.add(cur);
+        for (; start < candidates.length; start++) {
+            if (candidates[start] == target) {
+                List<Integer> arr = new ArrayList<>();
+                arr.add(target);
+                res.add(arr);
+            }
+            List<List<Integer>> tails = getCombo(candidates, start, target - candidates[start]);
+            for (List<Integer> tail: tails) {
+                tail.add(candidates[start]);
+                res.add(tail);
             }
         }
         return res;

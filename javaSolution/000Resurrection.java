@@ -1,18 +1,16 @@
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 class Resurrection {
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode prior = new ListNode(1);
-        prior.next = head;
-        ListNode left = prior, right = head;
-        for (; n > 0; n--) {
-            right = right.next;
+    public int maxSubArray(int[] nums) {
+        if (nums.length == 0) return 0;
+        int large = nums[0], largest = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            large = Math.max(large + nums[i], nums[i]);
+            largest = Math.max(large, largest);
+
         }
-        while (right != null) {
-            right = right.next;
-            left = left.next;
-        }
-        left.next = left.next.next;
-        return prior.next;
+        return largest;
     }
 }

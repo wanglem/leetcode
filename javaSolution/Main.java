@@ -1,5 +1,5 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 
 public class Main {
 
@@ -13,6 +13,7 @@ public class Main {
         double[] f = {2.0, 3.0};
         String[][] g = new String[][] {{"a", "b"}, {"b", "c"}};
         String[][] queries = new String[][] {{"a","c"},{"b","c"},{"a","e"},{"a","a"},{"x","x"}};
+        p((new JumpGame()).jumpGreedy(new int[]{1,1,1}));
 
     }
 
