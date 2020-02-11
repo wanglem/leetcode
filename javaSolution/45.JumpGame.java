@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 // you can jump maximum of nums[i] at i, try reach the end
-class JumpGame {
+class JumpGameII {
 
     // [2,3,1,1,4]
     // O(n2) complexity

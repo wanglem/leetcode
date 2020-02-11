@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 public class Main {
@@ -13,11 +15,24 @@ public class Main {
         double[] f = {2.0, 3.0};
         String[][] g = new String[][] {{"a", "b"}, {"b", "c"}};
         String[][] queries = new String[][] {{"a","c"},{"b","c"},{"a","e"},{"a","a"},{"x","x"}};
-        p((new JumpGame()).jumpGreedy(new int[]{1,1,1}));
+        int[][] in = {{1,0,3}};
+        p(new SubsetsII().findSubsets(new int[]{1,1,2,2}, 0, 0,3));
 
     }
+    private static void aa(int a) {
+        p(a);
+    }
 
-    private static void print2D(char[][] board) {
+    private static void p(char[][] board) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                System.out.print(board[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println("");
+        }
+    }
+    private static void p(int[][] board) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 System.out.print(board[i][j]);
