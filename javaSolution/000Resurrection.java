@@ -2,36 +2,44 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/*
+There are N children standing in a line. Each child is assigned a rating value.
+
+You are giving candies to these children subjected to the following requirements:
+
+Each child must have at least one candy.
+Children with a higher rating get more candies than their neighbors.
+What is the minimum candies you must give?
+
+Example 1:
+
+Input: [1,0,2]
+Output: 5
+Explanation: You can allocate to the first, second and third child with 2, 1, 2 candies respectively.
+ */
 class Resurrection {
-    public boolean exist(char[][] board, String word) {
-        int m = board.length, n = board[0].length;
-        boolean[][] seen = new boolean[m][n];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                boolean found = bfs(board, i, j, 0, seen, word);
-                if (found) return true;
+    public int candy(int[] R) {
+        int n = R.length;
+        int decreasingStart = 0;
+        int[] candies = new int[n];
+        Arrays.fill(candies, 1);
+        for (int i = 1; i < n + 1; i++) {
+            if (i == n || R[i] < R[i-1]) {
+                for (int j = i-1; j > decreasingStart; j--) {
+                    candies[j]++;
+                }
+                if (decreasingStart < n - 1
+                        && candies[decreasingStart] <= candies[decreasingStart+1]) {
+                    candies[decreasingStart]++;
+                }
+            } else if (R[i] > R[i-1]) {
+                candies[i] = candies[i-1] + 1;
+                decreasingStart = i;
+            } else {
+                candies[i] = candies[i-1];
             }
         }
-        return false;
-    }
 
-    private boolean bfs(char[][] B, int i, int j, int reach,boolean[][] seen, String word) {
-        if (reach == word.length()) return true;
-        int m = B.length, n = B[0].length;
-        if (i < 0 || i >=m || j < 0 || j >= n) return false;
-        if (word.charAt(reach) != B[i][j]) return false;
-        if (seen[i][j]) return false;
-
-        seen[i][j] = true;
-        boolean up = bfs(B, i-1, j, reach+1, seen, word);
-        if (up) return true;
-        boolean down = bfs(B, i+1, j, reach+1, seen, word);
-        if (down) return true;
-        boolean left = bfs(B, i, j-1, reach+1, seen, word);
-        if (left) return true;
-        boolean right = bfs(B, i, j+1, reach+1, seen, word);
-        if (right) return true;
-        seen[i][j] = false;
-        return false;
+        return Arrays.stream(candies).sum();
     }
 }
