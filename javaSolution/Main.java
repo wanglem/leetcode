@@ -16,7 +16,7 @@ public class Main {
         String[][] g = new String[][] {{"a", "b"}, {"b", "c"}};
         String[][] queries = new String[][] {{"a","c"},{"b","c"},{"a","e"},{"a","a"},{"x","x"}};
         int[][] in = {{1,0,3}};
-        p(new SubsetsII().findSubsets(new int[]{1,1,2,2}, 0, 0,3));
+        p(new FractionToRecurringDecimal().fractionToDecimal(2,3));
 
     }
     private static void aa(int a) {

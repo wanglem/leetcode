@@ -42,11 +42,11 @@ Output:
  */
 class WordBreakII {
     public boolean wordBreak(String s, List<String> wordDict) {
-        
+        return false;
     }
 
     private boolean tryBreak(String s, int index, Set<String> dict) {
-        
+        return false;
     }
 
 }
