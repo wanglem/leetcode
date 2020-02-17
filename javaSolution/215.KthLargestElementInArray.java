@@ -17,4 +17,36 @@ class KthLargestElementInArray {
         }
         return maxK;
     }
+
+    public int quickSelectKthLargest(int[] nums, int k) {
+        int kSmallest = nums.length - k;
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            int pivotIndex = partition(nums, left, right);
+            if (pivotIndex == kSmallest) return nums[pivotIndex];
+            else if (pivotIndex > kSmallest) right = pivotIndex-1;
+            else left = pivotIndex+1;
+        }
+        return nums[left];
+    }
+
+
+    private int partition(int[] A, int left, int right) {
+        int pivot = A[right];
+        int pivotIndex  = left;
+        for (int i = left; i < right; i++) {
+            if (A[i] < pivot) {
+                swap(A, i, pivotIndex++);
+            }
+
+        }
+        swap(A, pivotIndex, right);
+        return pivotIndex;
+    }
+
+    private void swap(int[] A, int i, int j) {
+        int tmp = A[i];
+        A[i] = A[j];
+        A[j] = tmp;
+    }
 }

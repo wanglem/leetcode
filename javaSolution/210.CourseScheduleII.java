@@ -1,57 +1,62 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
+import java.util.stream.Collectors;
 
 class CourseScheduleII {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        HashMap<Integer, Set<Integer>> deps = new HashMap<>();
-        for (int[] dep : prerequisites) {
-            Set<Integer> pre = deps.getOrDefault(dep[0], new HashSet<>());
-            pre.add(dep[1]);
-            deps.put(dep[0], pre);
-        }
-        Stack<Integer> sortStack = new Stack<>();
-        for (int i = 0; i< numCourses; i++) {
-            if (deps.containsKey(i)) {
-                continue;
+        Map<Integer, Set<Integer>> preof = new HashMap<>();
+        for (int i = 0; i < prerequisites.length; i++) {
+            int toTake = prerequisites[i][0];
+            int toTakePre = prerequisites[i][1];
+            if (!preof.containsKey(toTake)) {
+                preof.put(toTake, new HashSet<>());
             }
-            sort(deps, new HashSet<>(), i, sortStack);
-            if (sortStack.isEmpty())  {
-                return new int[]{};
-            }
+            preof.get(toTake).add(toTakePre);
         }
-        if (sortStack.size() != numCourses) {
-            return new int[]{};
 
+        boolean[] learnt = new boolean[numCourses];
+        Set<Integer> nonLeaf = preof
+                .values()
+                .stream()
+                .flatMap(x -> x.stream())
+                .collect(Collectors.toSet());
+        Set<Integer> leaves = new HashSet<>(preof.keySet());
+        leaves.removeAll(nonLeaf);
+        if (leaves.isEmpty()) return new int[]{};
+        List<Integer> sorted = new ArrayList<>();
+        for (Integer noPre: leaves) {
+            List<Integer> toLearn = learn(noPre, learnt, new HashSet<>(), preof);
+            if (toLearn.isEmpty()) return new int[]{};
+            sorted.addAll(toLearn);
         }
-        return toOrder(sortStack);
+
+        int[] courseOrder = new int[numCourses];
+        int i = 0;
+        while (i < sorted.size()) {
+            courseOrder[i] = sorted.get(i);
+            i++;
+        }
+        for (int j = 0; j < numCourses; j++) {
+            if (!learnt[j]) courseOrder[i++] = j;
+        }
+        return courseOrder;
     }
-    private int[] toOrder(Stack<Integer> stack) {
-        int[] ordered = new int[stack.size()];
-        for (int i = 0; i<stack.size(); i++) {
-            ordered[i] = stack.pop();
+
+    private List<Integer> learn(int start, boolean[] learnt, Set<Integer> seen, Map<Integer, Set<Integer>> preof) {
+        if (seen.contains(start)) return new ArrayList<>();
+
+        List<Integer> res = new ArrayList<>();
+        seen.add(start);
+        for (Integer pre: preof.getOrDefault(start, new HashSet<>())) {
+            if (learnt[pre]) continue;
+            List<Integer> toLearn = learn(pre, learnt, seen, preof);
+            if (toLearn.isEmpty()) return new ArrayList<>();
+            res.addAll(toLearn);
         }
-        return ordered;
-    }
-    private void sort(HashMap<Integer, Set<Integer>> deps, Set<Integer> seen, Integer root, Stack<Integer> sortStack){
-        if (seen.contains(root)) {
-            sortStack.clear();
-            return;
-        }
-        if (!deps.containsKey(root)) {
-            sortStack.push(root);
-            return;
-        }
-        seen.add(root);
-        for (Integer pre : deps.get(root)) {
-            sort(deps, seen, pre, sortStack);
-            if (sortStack.isEmpty()) {
-                return;
-            }
-            sortStack.push(pre);
-        }
-        seen.remove(root);
+
+        res.add(start);
+        seen.remove(start);
+        learnt[start] = true;
+        return res;
     }
 
 }

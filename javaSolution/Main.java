@@ -15,8 +15,7 @@ public class Main {
         double[] f = {2.0, 3.0};
         String[][] g = new String[][] {{"a", "b"}, {"b", "c"}};
         String[][] queries = new String[][] {{"a","c"},{"b","c"},{"a","e"},{"a","a"},{"x","x"}};
-        int[][] in = {{1,0,3}};
-        p(new FractionToRecurringDecimal().fractionToDecimal(2,3));
+        p(new HouseRobberII().rob(new int[]{2,3,2}));
 
     }
     private static void aa(int a) {
