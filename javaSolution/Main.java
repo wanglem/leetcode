@@ -7,15 +7,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        int[] a = {7,2,5,10,8};
-        String b = "105";
-        int c = 5;
-        String[] d = {"wrt","wrf","er","ett","rftt"};
-        int[][] e = {{0,0},{0,1},{1,0},{1,2},{2,1},{2,2}};
-        double[] f = {2.0, 3.0};
-        String[][] g = new String[][] {{"a", "b"}, {"b", "c"}};
-        String[][] queries = new String[][] {{"a","c"},{"b","c"},{"a","e"},{"a","a"},{"x","x"}};
-        p(new HouseRobberII().rob(new int[]{2,3,2}));
+        int[][] a = {{1,1,1,1}, {1,0,0,0}, {1,0,0,0}, {1,0,0,0}};
+        p(new MaxSideLenSquareWithSumLEThreshold().maxSideLength(a, 6));
 
     }
     private static void aa(int a) {
