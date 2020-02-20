@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         int[] a = {1,2,3,4,5,6,7,8,9};
-        p(new StringTransformationIntoAnotherString().canConvert("leet", "code"));
+        p(new ConfusingNumber().confusingNumberII(1000000000));
 
     }
     private static void aa(int a) {
