@@ -13,7 +13,7 @@ List<Integer> arr = Arrays.asList(1,2,3);
 
 // an ordered Set
 TreeSet<Integer> ts = new TreeSet<>(arr);
-ts.celing(12); // return least element >= 12
+ts.ceiling(12); // return least element >= 12
 ts.floor(12); //return greatest element <= 12
 // ts.higher(), ts.lower() for > or < value
 
@@ -21,6 +21,21 @@ ts.headSet(12, inclusiveBoolean) // all elements lower than 12
 ts.tailSet(12, inclusiveBoolean) // all elements greater than 12
 
 ts.subSet(12, 15) // all elements between 12 and 15
+
+
+/*********   TreeMap      ***********/
+TreeMap<Integer, Integer> tm = new TreeMap<>();
+tm.put(1,2);
+int k = tm.floorKey(12); // return largest key when <= 12
+int k = tm.ceilingKey(12); // return smallest key when  <= 12
+Map.Entry<Integer, Integer> e = tm.floorEntry(12); // return entry for largest key when <= 12
+Map.Entry<Integer, Integer> e = tm.ceilingEntry(12); // return entry for smallest key when  <= 12
+
+// array of TreeMap
+TreeMap<Integer, Integer>[] arr2 = new TreeMap[length];
+arr2[0] = new TreeMap<>();
+arr2[0].put(1,1);
+
 
 /************   List      ***********/
 
