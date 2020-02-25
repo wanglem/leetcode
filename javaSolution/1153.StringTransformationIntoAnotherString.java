@@ -1,5 +1,8 @@
 import java.util.*;
 
+/*
+    Can almost always convert as long as str2 does not contain 26 chars.
+ */
 class StringTransformationIntoAnotherString {
     public boolean canConvert(String str1, String str2) {
         if (str1.length() != str2.length()) return false;
