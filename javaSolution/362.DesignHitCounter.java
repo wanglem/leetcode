@@ -13,7 +13,7 @@ class DesignHitCounter {
     private LinkedList<SecUnit> window;
     private int count;
     /** Initialize your data structure here. */
-    public HitCounter() {
+    public DesignHitCounter() {
         window = new LinkedList<>();
         count = 0;
     }

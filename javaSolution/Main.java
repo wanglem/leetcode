@@ -7,9 +7,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        p(new CampusBikeII().assignBikes(
-                new int[][]{{0,0},{1,0},{2,0},{3,0},{4,0},{5,0},{6,0},{7,0},{8,0}},
-                new int[][]{{0,999},{1,999},{2,999},{3,999},{4,999},{5,999},{6,999},{7,999},{8,999},{9,999}}));
+
+        p(new MinimizeMalwareSpread().minMalwareSpread(new int[][]{{1,0,0},{0,1,0},{0,0,1}}, new int[]{0,2}));
 
     }
 
