@@ -7,13 +7,10 @@ public class Main {
 
 
     public static void main(String[] args) {
-        int[] a = {1,2,3,4,5,6,7,8,9};
-//        p(new OptimalAccountBalancing().minTransfers(new int[][]{{0,1,1},{0,2,1},{1,3,1},{2,3,1}}));
-//        p(new OptimalAccountBalancing().minTransfers(new int[][]{{0,1,10}, {1,0,1}, {1,2,5}, {2,0,5}}));
-        p(new OptimalAccountBalancing().minTransfers(new int[][]{{0,1,2}, {1,2,1}, {1,3,1}}));
-    }
-    private static void aa(int a) {
-        p(a);
+        p(new CampusBikeII().assignBikes(
+                new int[][]{{0,0},{1,0},{2,0},{3,0},{4,0},{5,0},{6,0},{7,0},{8,0}},
+                new int[][]{{0,999},{1,999},{2,999},{3,999},{4,999},{5,999},{6,999},{7,999},{8,999},{9,999}}));
+
     }
 
     private static void p(char[][] board) {
