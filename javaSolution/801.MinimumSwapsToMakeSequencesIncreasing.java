@@ -1,4 +1,6 @@
 /*
+    G.
+    
     swap[i] means you swap A[i] and B[i] at i.
     stay[i] means you DO NOT swap A[i] and B[i] at i.
 

@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        p(new MinimizeMalwareSpread().minMalwareSpread(new int[][]{{1,0,0},{0,1,0},{0,0,1}}, new int[]{0,2}));
+        p(new LongestLineOfConsecutiveOneInMatrix().longestLine(new int[][]{{0,1,1,0},{0,1,1,0},{0,0,0,1}}));
 
     }
 
