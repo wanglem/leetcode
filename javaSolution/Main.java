@@ -8,7 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        p(new LongestLineOfConsecutiveOneInMatrix().longestLine(new int[][]{{0,1,1,0},{0,1,1,0},{0,0,0,1}}));
+//        p(new MaximumLengthOfConcatenatedStringwithUniqueCharacters().maxLength(Arrays.asList("cha","r","act","ers")));
+        p(new MaximumLengthOfConcatenatedStringwithUniqueCharacters().maxLength(Arrays.asList("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p")));
 
     }
 
