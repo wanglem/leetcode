@@ -7,9 +7,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-
-//        p(new MaximumLengthOfConcatenatedStringwithUniqueCharacters().maxLength(Arrays.asList("cha","r","act","ers")));
-        p(new MaximumLengthOfConcatenatedStringwithUniqueCharacters().maxLength(Arrays.asList("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p")));
+        
+        p(new RemoveComments().removeComments(new String[]{"main() {", "   func(1);", "   /** / more comments here", "   float f = 2.0", "   f += f;", "   cout << f; */", "}"}));
 
     }
 

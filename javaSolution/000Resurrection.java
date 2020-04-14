@@ -1,59 +1,40 @@
 import java.util.*;
 
-class TwoKeyHashMap {
-    List<String> myKey1;
-    List<String> myKey2;
-    List<String> values;
+class Resurrection {
 
-    public TwoKeyHashMap() {
-        myKey1 = new ArrayList<>();
-    }
-
-    public void put(String k1, String k2, String v) {
-        myKey1.add(k1);
-        myKey2.add(k2);
-        values.add(v);
-    }
-
-    public String get(String k1, String k2) {
-        int i = 0;
-        for (; i < myKey1.size(); i++) {
-            if (k1.equals(myKey1.get(i))) break;
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        Map<Integer, Set<Integer>> courseToPre = new HashMap<>();
+        for (int[] p: prerequisites) {
+            if (!courseToPre.containsKey(p[0])) {
+                courseToPre.put(p[0], new HashSet<>());
+            }
+            courseToPre.get(p[0]).add(p[1]);
         }
 
-        int j = 0;
-        for (; j < myKey2.size(); i++) {
-            if (k2.equals(myKey2.get(j))) break;
+        boolean[] seen = new boolean[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            if (seen[i]) continue;
+            boolean circle = hasCircle(courseToPre, i, new boolean[numCourses], seen);
+            if (circle) {
+                return false;
+            }
         }
 
-        if (i == j) return values.get(i);
-
-        throw new RuntimeException("Key Not Found");
-    }
-
-    public boolean delete(String k1, String k2) {
-        int i = 0;
-        for (; i < myKey1.size(); i++) {
-            if (k1.equals(myKey1.get(i))) break;
-        }
-
-        myKey1.remove(i);
-        if (k2.equals(myKey2.get(i))) {
-            myKey2.remove(i);
-        }
         return true;
     }
 
-    public List<String> getMyKey1() {
-        return myKey1;
-    }
+    private boolean hasCircle(Map<Integer, Set<Integer>> courseToPre, int course, boolean[] visited, boolean[] seen) {
+        if (visited[course]) return true;
+        seen[course] = true;
 
-    public List<String> getMyKey2() {
-        return myKey2;
-    }
+        visited[course] = true;
+        for (int pre: courseToPre.getOrDefault(course, new HashSet<>())) {
+            boolean circle = hasCircle(courseToPre, pre, visited, seen);
+            if (circle) return true;
+        }
+        visited[course] = false;
 
-    public List<String> getValues() {
-        return values;
+        return false;
     }
     
 }

@@ -1,93 +1,66 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
+// MSFT
+// Explaination: https://www.youtube.com/watch?v=GSBLe8cKu0s
 
 class SkyLineProblem {
 
-    private class Building {
-        int start;
-        int end;
+    private class BuildingLine {
+        int idx;
         int height;
-        Building(int s, int e, int h){
-            start = s;
-            end = e;
-            height = h;
+        boolean isStart;
+        BuildingLine(int idx, int height, boolean isStart) {
+            this.idx = idx;
+            this.height = height;
+            this.isStart = isStart;
         }
     }
+
     public List<List<Integer>> getSkyline(int[][] buildings) {
-        List<Building> b = new ArrayList<>();
-        for (int[] bu: buildings) {
-            b.add(new Building(bu[0], bu[1], bu[2]));
+        List<BuildingLine> lines = new ArrayList<>();
+
+        for (int[] b: buildings) {
+            lines.add(new BuildingLine(b[0], b[2], true));
+            lines.add(new BuildingLine(b[1], b[2], false));
         }
 
-        return toReturnValue(concat(breakUp(b)));
+        Collections.sort(lines, new Comparator<BuildingLine>() {
+            @Override
+            public int compare(BuildingLine o1, BuildingLine o2) {
+                if (o1.idx != o2.idx) {
+                    return Integer.compare(o1.idx, o2.idx);
+                }
 
+                if (o1.isStart && o2.isStart) {
+                    return Integer.compare(o2.height, o1.height); // both start, higher height in front
+                }
 
-    }
+                if (!o1.isStart && !o2.isStart) {
+                    return Integer.compare(o1.height, o2.height);
+                }
 
-    private List<Building> breakUp(List<Building> b) {
-        List<Building> res = new ArrayList<>();
-        Building toMerge = null;
-        for (int i = 0; i < b.size(); i++) {
-            Building cur = b.get(i);
-            if (toMerge == null) {
-                toMerge = cur;
-                continue;
+//                if (o1.isStart ^ o2.isStart) { // must be true at this point.
+                    return Integer.compare(o2.height, o1.height);
+//                }
             }
-            if (toMerge.end <= cur.start) { // no overlap
-                res.add(toMerge);
-                toMerge = cur;
-                continue;
-            }
-            if (toMerge.start < cur.start) {
-                res.add(new Building(toMerge.start, cur.start, toMerge.height));
-            }
-            res.add(new Building(cur.start, Math.min(toMerge.end, cur.end), Math.max(toMerge.height, cur.height)));
-            if (toMerge.end > cur.end) {
-                toMerge = new Building(cur.end, toMerge.end, toMerge.height);
-            } else if (toMerge.end < cur.end) {
-                toMerge = new Building(toMerge.end, cur.end, cur.height);
-            } else {
-                toMerge = null;
-            }
-        }
-        if (toMerge != null) res.add(toMerge);
-        return res;
-    }
+        });
 
-    private List<Building> concat(List<Building> b) {
-        List<Building> res = new ArrayList<>();
-        Building toConcat = null;
-        for (int i = 0; i < b.size(); i++) {
-            Building cur = b.get(i);
-            if (toConcat == null) {
-                toConcat = cur;
-                continue;
-            }
-            if (toConcat.height == cur.height) {
-                toConcat.end = cur.end;
-            } else {
-                res.add(toConcat);
-                toConcat = cur;
-            }
-        }
-
-        res.add(toConcat);
-        return res;
-    }
-
-    private List<List<Integer>> toReturnValue(List<Building> b) {
+        TreeSet<Integer> order = new TreeSet<>();
+        order.add(0);
         List<List<Integer>> res = new ArrayList<>();
-        int preEnd = -1;
-        for (int i = 0; i < b.size(); i++) {
-            Building cur = b.get(i);
-            if (preEnd > 0 && preEnd < cur.start) {
-                res.add(Arrays.asList(preEnd, 0));
+        for (BuildingLine line: lines) {
+            if (line.isStart) {
+                order.add(line.height);
+                if (order.last() <= line.height) {
+                    res.add(Arrays.asList(line.idx, line.height));
+                }
+            } else {
+                order.remove(line.height);
+                if (order.last() < line.height) {
+                    res.add(Arrays.asList(line.idx, order.last()));
+                }
             }
-            res.add(Arrays.asList(cur.start, cur.height));
-            preEnd = cur.end;
         }
-        res.add(Arrays.asList(preEnd, 0));
         return res;
     }
     
