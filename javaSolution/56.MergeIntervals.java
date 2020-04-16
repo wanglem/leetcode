@@ -2,19 +2,19 @@ import java.util.*;
 
 class MergeIntervals {
 
-    public List<Interval> merge(List<Interval> intervals) {
-        intervals.sort(Comparator.comparingInt(x -> x.start));
-        LinkedList<Interval> res = new LinkedList<>();
-        res.addLast(new Interval(intervals.get(0).start, intervals.get(0).end));
-        for (Interval I : intervals) {
-            if (I.start >= res.getLast().end) {
-                // merge
-                res.getLast().end = I.end;
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        List<int[]> res = new ArrayList<>();
+        for (int[] interval: intervals) {
+            if (res.isEmpty()) res.add(interval);
+            int[] last = res.get(res.size()-1);
+            if (last[1] >= interval[0]) {
+                last[1] = Math.max(last[1], interval[1]);
             } else {
-                // not merge
-                res.add(I);
+                res.add(interval);
             }
         }
-        return res;
+
+        return res.toArray(new int[res.size()][]);
     }
 }
