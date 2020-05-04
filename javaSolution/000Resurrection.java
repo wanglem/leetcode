@@ -2,22 +2,16 @@ import java.util.*;
 
 class Resurrection {
 
-    public boolean isValidBST(TreeNode root) {
-        Stack<TreeNode> inorder = new Stack<>();
-        TreeNode prev = null;
-        while (!inorder.isEmpty() || root != null) {
-            while (root != null) {
-                inorder.push(root);
-                root = root.left;
+    public int firstMissingPositive(int[] nums) {
+        boolean[] mark = new boolean[nums.length];
+        for (int n: nums) {
+            if (n > 0 && n <= nums.length) {
+                mark[n-1] = true;
             }
-            root = inorder.pop();
-            if (prev != null && prev.val >= root.val) {
-                return false;
-            }
-            prev = root;
-            root = root.right;
         }
-
-        return true;
+        for (int i = 0; i < mark.length; i++) {
+            if (!mark[i]) return i+1;
+        }
+        return mark.length+1;
     }
 }
