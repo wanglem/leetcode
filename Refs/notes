@@ -12,6 +12,10 @@ sum 等差数列
 -------------
       2
 
+Tree Traversal
+    1. *InOrder*: Binary Search Tree Order
+    2. PreOrder: All the way to left. mid first, then left, then right
+    3. Post order: All the way to left. left first, then right, then mid.
 
 Buy and Sell Stocks
 Q: List of Double nums, means that at time i the stock price is nums[i]

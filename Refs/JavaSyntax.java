@@ -30,6 +30,8 @@ int k = tm.floorKey(12); // return largest key when <= 12
 int k = tm.ceilingKey(12); // return smallest key when  <= 12
 Map.Entry<Integer, Integer> e = tm.floorEntry(12); // return entry for largest key when <= 12
 Map.Entry<Integer, Integer> e = tm.ceilingEntry(12); // return entry for smallest key when  <= 12
+SortedMap<Integer, Integer> tailMap = tm.tailMap(12, isInclusive); // return sortedmap with key greater (or equal) than 12
+        SortedMap<Integer, Integer> tailMap = tm.headMap(12, isInclusive); // return sortedmap with key less (or equal) than 12
 
 // array of TreeMap
 TreeMap<Integer, Integer>[] arr2 = new TreeMap[length];

@@ -2,6 +2,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 class LRUCache {
+    // maintains insertion order on iteration of this LinkedHashMap
+    // put op puts last of linkedhashmap
     private LinkedHashMap<Integer, Integer> lhm;
     private int capacity;
     public LRUCache(int capacity) {

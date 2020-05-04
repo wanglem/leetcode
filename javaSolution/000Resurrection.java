@@ -2,20 +2,22 @@ import java.util.*;
 
 class Resurrection {
 
-    public int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
-        List<int[]> res = new ArrayList<>();
-        for (int[] interval: intervals) {
-            if (res.isEmpty()) res.add(interval);
-            int[] last = res.get(res.size()-1);
-            if (last[1] >= interval[0]) {
-                last[1] = Math.max(last[1], interval[1]);
-            } else {
-                res.add(interval);
+    public boolean isValidBST(TreeNode root) {
+        Stack<TreeNode> inorder = new Stack<>();
+        TreeNode prev = null;
+        while (!inorder.isEmpty() || root != null) {
+            while (root != null) {
+                inorder.push(root);
+                root = root.left;
             }
+            root = inorder.pop();
+            if (prev != null && prev.val >= root.val) {
+                return false;
+            }
+            prev = root;
+            root = root.right;
         }
 
-        return res.toArray(new int[res.size()][]);
+        return true;
     }
-    
 }

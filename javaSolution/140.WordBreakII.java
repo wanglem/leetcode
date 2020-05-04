@@ -1,5 +1,4 @@
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /*
 Given a non-empty string s and a dictionary wordDict containing a list of non-empty words,
@@ -41,12 +40,34 @@ Output:
 []
  */
 class WordBreakII {
-    public boolean wordBreak(String s, List<String> wordDict) {
-        return false;
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        Set<String> dict = new HashSet<>(wordDict);
+        return tryBreak(s, dict, new HashMap<>());
+
     }
 
-    private boolean tryBreak(String s, int index, Set<String> dict) {
-        return false;
+    private List<String> tryBreak(String s, Set<String> dict, Map<String, List<String>> segmentAt) {
+        if (segmentAt.containsKey(s)) {
+            return segmentAt.get(s);
+        }
+        List<String> res = new LinkedList<>();
+        for (int i = 1; i <= s.length(); i++) {
+            String wordToTry = s.substring(0, i);
+            if (dict.contains(wordToTry)) {
+                if (i == s.length()) {
+                    // full String s is a word, no need further recursive call.
+                    res.add(wordToTry);
+                } else {
+                    for (String sub: tryBreak(s.substring(i), dict, segmentAt)) {
+                        res.add(wordToTry + " " + sub);
+                    }
+                }
+            }
+        }
+        // segmentAt remembers all break combinations of S.
+        // in this case suffix's break combination of the orginal s.
+        segmentAt.put(s, res);
+        return res;
     }
 
 }

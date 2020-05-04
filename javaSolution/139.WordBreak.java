@@ -46,4 +46,19 @@ class WordBreak {
         return false;
     }
 
+    public boolean wordBreakDP(String s, List<String> wordDict) {
+        Set<String> dict = new HashSet<>(wordDict);
+        boolean[] canBreak = new boolean[s.length()+1];
+        canBreak[0] = true;
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j <= i; j++) {
+                if (canBreak[j] && dict.contains(s.substring(j, i+1))) {
+                    canBreak[i+1] = true;
+                    break;
+                }
+            }
+        }
+        return canBreak[s.length()];
+    }
+
 }

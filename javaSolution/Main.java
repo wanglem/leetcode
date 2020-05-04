@@ -7,8 +7,13 @@ public class Main {
 
 
     public static void main(String[] args) {
-        
-        p(new RemoveComments().removeComments(new String[]{"main() {", "   func(1);", "   /** / more comments here", "   float f = 2.0", "   f += f;", "   cout << f; */", "}"}));
+        RandomizedSet r = new RandomizedSet();
+        r.insert(0);
+        r.insert(1);
+        r.remove(0);
+        r.insert(2);
+        r.remove(1);
+        p(r.getRandom());
 
     }
 
