@@ -7,7 +7,7 @@ class MoveZeroes {
                 nonZeroIndex++;
             }
         }
-        for (int i = nonZeroIndex+1; i < nums.length; i++) {
+        for (int i = nonZeroIndex; i < nums.length; i++) {
             nums[i] = 0;
         }
     }

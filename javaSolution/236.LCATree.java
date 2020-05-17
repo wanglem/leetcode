@@ -1,40 +1,25 @@
 class LCATree {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
-    class LCAState {
-        boolean findP = false;
-        boolean findQ = false;
-        TreeNode lca = null;
-        boolean found() {
-            return findP && findQ;
-        }
-    }
+    private TreeNode lca = null;
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        return findLCA(root, p, q).lca;
+        findLCA(root, p, q);
+        return lca;
     }
 
-    private LCAState findLCA(TreeNode root, TreeNode p, TreeNode q) {
-        LCAState state = new LCAState();
-        if (root == null) return state;
-        if (root.val == p.val){
-            state.findP = true;
-        } else if (root.val == q.val) {
-            state.findQ = true;
-        }
+    private int findLCA(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return 0;
 
-        LCAState leftFound = findLCA(root.left, p, q);
-        LCAState rightFound = findLCA(root.right, p, q);
-        state.findP = state.findP || leftFound.findP || rightFound.findP;
-        state.findQ = state.findQ || leftFound.findQ || rightFound.findQ;
-        if (state.found()) {
-            if (state.lca == null) {
-                state.lca = root;
-            }
+        int status = 0;
+        int leftFound = findLCA(root.left, p, q);
+        if (leftFound == 2) return 2;
+        int rightFound = findLCA(root.right, p, q);
+        if (rightFound == 2) return 2;
+        if (root.val == p.val) status++;
+        if (root.val == q.val) status++;
+        status += leftFound;
+        status += rightFound;
+        if (status == 2) {
+            lca = root;
         }
-        return state;
+        return status;
     }
 }

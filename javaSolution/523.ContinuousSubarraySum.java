@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 // subarray sum to n*k where n >= 0
 class ContinuousSubarraySum {
     public boolean checkSubarraySum(int[] nums, int k) {
@@ -17,6 +20,23 @@ class ContinuousSubarraySum {
                 }
             }
         }
+        return false;
+    }
+
+    public boolean checkSubarraySumOn(int[] nums, int k) {
+        Map<Integer, Integer> sumToIndex = new HashMap<>();
+        sumToIndex.put(0, -1);
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (k != 0) sum %= k;
+            if (sumToIndex.containsKey(sum)) {
+                if (i - sumToIndex.get(sum) > 1) return true;
+            } else {
+                sumToIndex.put(sum, i);
+            }
+        }
+
         return false;
     }
 }

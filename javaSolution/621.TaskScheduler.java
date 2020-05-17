@@ -23,29 +23,29 @@ class TaskScheduler {
         PriorityQueue<Task> scheduler = new PriorityQueue<>((x, y) -> y.count - x.count);
         int[] taskCounts = new int[26];
         for (char c : tasks) {
-            taskCounts[c - 'a']++;
+            taskCounts[c - 'A']++;
         }
         for (int i = 0; i < 26; i++) {
-            scheduler.offer(new Task(i, taskCounts[i], 0));
+            if (taskCounts[i] > 0) {
+                scheduler.offer(new Task(i, taskCounts[i], 0));
+            }
         }
 
         int schedules = 0;
         while (!cooldowns.isEmpty() || !scheduler.isEmpty()) {
-            if (!cooldowns.isEmpty()) {
-                if (schedules - cooldowns.peek().lastSchedule >= n) {
-                    scheduler.offer(cooldowns.poll());
-                }
+            while (!cooldowns.isEmpty() && schedules - cooldowns.peek().lastSchedule - 1 >= n) {
+                scheduler.offer(cooldowns.poll());
             }
             if (scheduler.isEmpty()) {
-                Task next = cooldowns.poll();
-                schedules += n - (schedules - next.lastSchedule) + 1;
-                scheduler.offer(next);
+                schedules += n - (schedules - cooldowns.peek().lastSchedule - 1);
             } else {
                 Task next = scheduler.poll();
-                schedules++;
                 next.lastSchedule = schedules;
+                schedules++;
                 next.count--;
-                cooldowns.offer(next);
+                if (next.count > 0) {
+                    cooldowns.offer(next);
+                }
             }
         }
         return schedules;

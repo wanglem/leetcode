@@ -7,13 +7,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        RandomizedSet r = new RandomizedSet();
-        r.insert(0);
-        r.insert(1);
-        r.remove(0);
-        r.insert(2);
-        r.remove(1);
-        p(r.getRandom());
+        p(new MinimumWindowSubstring().minWindow("aa", "aa"));
 
     }
 

@@ -5,47 +5,48 @@ import java.util.stream.IntStream;
 class SubsetsII {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         Arrays.sort(nums);
+
         List<List<Integer>> res = new ArrayList<>();
-        for (int i = 0; i < nums.length+1; i++) {
-            res.addAll(findSubsets(nums, 0, 0, i));
+        for (int i = 2; i < nums.length; i++) {
+            res.addAll(subsetsK(nums, 0, i));
         }
+
+        res.add(Collections.emptyList());
+        if (nums.length > 1) {
+            res.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (i != nums.length - 1 && nums[i] == nums[i+1]) continue;
+            res.add(Collections.singletonList(nums[i]));
+        }
+
         return res;
     }
 
-    public List<List<Integer>> findSubsets(int[] A, int start, int len, int k) {
+    private List<List<Integer>> subsetsK(int[] nums, int start, int K) {
+        if (start >= nums.length) return Collections.emptyList();
+
         List<List<Integer>> res = new ArrayList<>();
-        if (k == 0) {
-            res.add(Collections.emptyList());
-            return res;
-        }
-        if (k == A.length) {
-            res.add(IntStream.of(A).boxed().collect(Collectors.toList()));
-            return res;
-        }
-        if (len == k-1) {
-            List<List<Integer>> arr = IntStream
-                    .of(Arrays.copyOfRange(A, start, A.length))
-                    .distinct()
-                    .mapToObj(Collections::singletonList)
-                    .collect(Collectors.toList());
-            res.addAll(arr);
+        if (K == 1) {
+            for (int i = start; i < nums.length; i++) {
+                if (i == start || nums[i] != nums[i-1]) {
+                    res.add(Collections.singletonList(nums[start++]));
+                }
+            }
             return res;
         }
 
-        Set<Integer> seen = new HashSet<>();
-        for (int i = start; i < A.length; i++) {
-            if (!seen.contains(A[i])) {
-                seen.add(A[i]);
-                List<List<Integer>> tails = findSubsets(A, i+1, len+1, k);
-                int curVal = A[i];
-                tails.forEach(x -> {
-                    List<Integer> addCur = new ArrayList<>();
-                    addCur.add(curVal);
-                    addCur.addAll(x);
-                    res.add(addCur);
-                });
+        for (int i = start; i < nums.length; i++) {
+            if (i != start && nums[i] == nums[i-1]) continue;
+            List<List<Integer>> tailList = subsetsK(nums, i+1, K-1);
+            for (List<Integer> tail: tailList) {
+                List<Integer> sub = new ArrayList<>();
+                sub.add(nums[i]);
+                sub.addAll(tail);
+                res.add(sub);
             }
         }
+
         return res;
     }
 }

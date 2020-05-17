@@ -52,5 +52,26 @@ class LengthOfLongestSubstring {
         }
         return minDistinct;
     }
+
+    public int lengthOfLongestSubstring3(String s) {
+        if (s.length() == 0) return 0;
+        // 256 for all ASCII chars, lower/upper case, white space etc.
+        boolean[] seen = new boolean[256];
+        int left = 0;
+        int longest = Integer.MIN_VALUE;
+        for (int i = 0; i < s.length(); i++) {
+            int idx = s.charAt(i);
+            if (seen[idx]) {
+                while (left < i && s.charAt(left) != s.charAt(i)) {
+                    seen[s.charAt(left++)] = false;
+                }
+                left++;
+            } else {
+                seen[idx] = true;
+                longest = Math.max(i - left + 1, longest);
+            }
+        }
+        return longest;
+    }
 }
 

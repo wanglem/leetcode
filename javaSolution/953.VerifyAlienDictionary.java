@@ -2,34 +2,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 // FB
+// no comparator stuff for String comparison
 class VerifyAlienDictionary {
     public boolean isAlienSorted(String[] words, String order) {
-        Map<Character, Integer> charIndex = new HashMap<>();
+        int[] charIndex = new int[256];
         for (int i = 0; i < order.length(); i++) {
-            charIndex.put(order.charAt(i), i);
+            charIndex[order.charAt(i)] = i;
         }
 
         for (int i = 1; i < words.length; i++) {
-            String w = words[i];
-            String pre = words[i-1];
-            boolean samePrefix = true;
-            for (int j = 0; j < Math.min(w.length(), pre.length()); j++) {
-                if (w.charAt(j) != pre.charAt(j)) {
-                    samePrefix = false;
-                    if (!ordered(pre.charAt(j), w.charAt(j), charIndex)) {
-                        return false;
-                    }
-                    break;
-                }
-            }
-            if (samePrefix && pre.length() > w.length()) {
-                return false;
-            }
+            if (!smaller(words[i-1], words[i], charIndex)) return false;
+
         }
         return true;
     }
 
-    private boolean ordered(char i, char j, Map<Character, Integer> charIndex) {
-        return charIndex.get(i) <= charIndex.get(j);
+    private boolean smaller(String a, String b, int[] charIndex) {
+        for (int j = 0; j < Math.min(a.length(), b.length()); j++) {
+            if (a.charAt(j) != b.charAt(j)) {
+                return charIndex[a.charAt(j)] <= charIndex[b.charAt(j)];
+            }
+        }
+        return a.length() < b.length();
     }
 }

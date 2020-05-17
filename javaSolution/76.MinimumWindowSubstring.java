@@ -2,57 +2,37 @@ import java.util.*;
 
 // continous substring contains all chars in `t`.
 // sliding window with two pointers
+// counter only ++ when occurance < target frequence.
+// when counter == t.length(), we know a window formed.
 class MinimumWindowSubstring {
     public String minWindow(String s, String t) {
-        // occurrence of char in t, reduce to < 0 of all means a valid substring
-        HashMap<Character, Integer> occur = new HashMap<>();
-        for (Character c : t.toCharArray()) {
-            occur.put(c, occur.getOrDefault(c, 0) + 1);
+        int[] target = new int[256];
+        for (char c: t.toCharArray()) {
+            target[c]++;
         }
-        String shortest = "";
-        int left = 0;
-        boolean canCompute = false;
-        while (left < s.length() && !occur.containsKey(s.charAt(left))) {
-            left++;
-        }
-        int right = 0;
+
+        int count = 0;
+        int[] freq = new int[256];
+        int left = 0, right = 0;
+
+        String res = null;
         while (right < s.length()) {
-            if (occur.containsKey(s.charAt(right))) {
-                if (!canCompute && canCompute(occur)) {
-                    canCompute = true;
+            char rchar = s.charAt(right);
+            if (target[rchar] > 0) {
+                if (freq[rchar] < target[rchar]) count++;
+                freq[rchar]++;
+            }
+            if (count >= t.length()) {
+                while (freq[s.charAt(left)] <= 0 || freq[s.charAt(left)] != target[s.charAt(left)]) {
+                    freq[s.charAt(left++)]--;
                 }
-                occur.put(s.charAt(right), occur.get(s.charAt(right))-1);
-                // try move left
-                while (left <= right) {
-                    if (!occur.containsKey(s.charAt(left))) {
-                        left++;
-                        continue;
-                    } else if (occur.containsKey(s.charAt(left)) && occur.get(s.charAt(left)) < 0) {
-                        occur.put(s.charAt(left), occur.get(s.charAt(left))+1);
-                    } else {
-                        break;
-                    }
-                    left++;
-                }
-                // try compute substring
-                if (canCompute) {
-                    String curShortest = s.substring(left, right+1);
-                    if (shortest.equals("")) {
-                        shortest = curShortest;
-                    } else {
-                        shortest = shortest.length() > curShortest.length() ? curShortest : shortest;
-                    }
+                if (res == null) res = s.substring(left, right + 1);
+                if (right - left + 1 < res.length()) {
+                    res = s.substring(left, right + 1);
                 }
             }
             right++;
         }
-
-        return shortest;
-    }
-    private Boolean canCompute(HashMap<Character, Integer> occur) {
-        for (Integer v: occur.values()){
-            if (v > 0) return false;
-        }
-        return true;
+        return null == res ? "" : res;
     }
 }
