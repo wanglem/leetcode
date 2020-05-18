@@ -7,12 +7,6 @@ import java.util.Queue;
 
  */
 class Codec {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
     private class IndexedTreeNode {
         int index;
         TreeNode node;

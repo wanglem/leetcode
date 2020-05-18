@@ -5,44 +5,60 @@ import java.util.*;
 // not difficult, but hard to write, easy bugs
 class AccountsMerge {
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
-        Map<String, Integer> emailToIndex = new HashMap<>();
-        for (int i = 0; i < accounts.size(); i++) {
-            List<String> account = accounts.get(i);
-            int dedupIndex = -1;
-            for (int j = 1; j < account.size(); j++) {
-                if (emailToIndex.containsKey(account.get(j))) {
-                    dedupIndex = emailToIndex.get(account.get(j));
-                    break;
-                }
+        Map<String, Integer> emailToId = new HashMap<>();
+        Map<Integer, String> idToName = new HashMap<>();
+        Map<Integer, Set<String>> idToEmails = new HashMap<>();
+
+        int autoIncrementId = 0;
+        for (List<String> acc: accounts) {
+            String name = acc.get(0);
+            List<Integer> ids = getAccountIds(acc, emailToId);
+            int id = autoIncrementId;
+            if (ids.size() > 0) {
+                id = ids.get(0);
+            } else {
+                // new Account
+                idToEmails.put(id, new HashSet<>());
+                autoIncrementId++;
             }
-            int accountIndex = dedupIndex == -1 ? i : dedupIndex;
-            Queue<String> emailsToDedupe = new LinkedList<>();
-            emailsToDedupe.addAll(account.subList(1, account.size()));
-            while (!emailsToDedupe.isEmpty()) {
-                String emailToDedupe = emailsToDedupe.poll();
-                if (!emailToIndex.containsKey(emailToDedupe)) {
-                    emailToIndex.put(emailToDedupe, accountIndex);
-                } else if (emailToIndex.get(emailToDedupe) != accountIndex) {
-                    emailsToDedupe.addAll(accounts.get(emailToIndex.get(emailToDedupe)).subList(1, accounts.get(emailToIndex.get(emailToDedupe)).size()));
-                    emailToIndex.put(emailToDedupe, accountIndex);
+
+            // link current account to `id`
+            idToName.put(id, name);
+            for (int i= 1; i < acc.size(); i++) {
+                emailToId.put(acc.get(i), id);
+                idToEmails.get(id).add(acc.get(i));
+            }
+
+            // link rest of connected account to `id`
+            for (int i = 1; i < ids.size(); i++) {
+                int idToConnect = ids.get(i);
+                Set<String> emailToConnect = idToEmails.get(idToConnect);
+                for (String email: emailToConnect) {
+                    emailToId.put(email, id);
+                    idToEmails.get(id).add(email);
                 }
+                idToEmails.remove(idToConnect);
             }
         }
-        Map<Integer, List<String>> indexToEmails = new HashMap<>();
-        for (Map.Entry<String, Integer> pair : emailToIndex.entrySet()) {
-            List<String> emails = indexToEmails.getOrDefault(pair.getValue(), new ArrayList<>());
-            emails.add(pair.getKey());
-            indexToEmails.put(pair.getValue(), emails);
-        }
+
         List<List<String>> mergedAccounts = new ArrayList<>();
-        for (Map.Entry<Integer, List<String>> merged : indexToEmails.entrySet()) {
-            List<String> account = new ArrayList<>();
-            account.add(accounts.get(merged.getKey()).get(0));
-            List<String> emails = merged.getValue();
+        for (int id: idToEmails.keySet()) {
+            String name = idToName.get(id);
+            List<String> emails = new ArrayList<>(idToEmails.get(id));
             Collections.sort(emails);
-            account.addAll(emails);
-            mergedAccounts.add(account);
+            emails.add(0, name);
+            mergedAccounts.add(emails);
         }
         return mergedAccounts;
+    }
+
+    private List<Integer> getAccountIds(List<String> account, Map<String, Integer> emailToId) {
+        Set<Integer> ids = new HashSet<>();
+        for (int i = 1; i < account.size(); i++) {
+            if (emailToId.containsKey(account.get(i))) {
+                ids.add(emailToId.get(account.get(i)));
+            }
+        }
+        return new ArrayList<>(ids);
     }
 }
