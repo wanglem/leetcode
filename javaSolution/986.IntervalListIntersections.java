@@ -19,7 +19,7 @@ class IntervalListIntersections {
             } else {
                 res.add(new int[]{Math.max(A[i][0], B[j][0]), Math.min(A[i][1], B[j][1])});
                 if (A[i][1] <= B[j][1]) i++;
-                if (B[j][1] <= A[i][1]) j++;
+                if (i < A.length && B[j][1] <= A[i][1]) j++;
             }
         }
 
