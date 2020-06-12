@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-// FB
+// FB, BB
 // use a stack
 // open, close to track numbers of open close parenthesis
 // if close > open, discard
@@ -35,5 +35,34 @@ class MinimumRemoveToMakeValidParentheses {
         }
 
         return res.reverse().toString();
+    }
+
+    public String t(String s) {
+        int open = 0, close = 0;
+        Stack<Character> st = new Stack<>();
+        for (char c: s.toCharArray()) {
+            if (c == '(') {
+                open++;
+                st.push(c);
+            } else if (c == ')') {
+                if (close < open) {
+                    close++;
+                    st.push(c);
+                }
+                // else ignore
+            } else {
+                st.push(c);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        int gap = open - close;
+        for (char c: st) {
+            if (open == gap && c == '(') continue;
+            if (c == ')') close--;
+            if (c == '(') open--;
+            sb.append(c);
+        }
+        return sb.toString();
     }
 }

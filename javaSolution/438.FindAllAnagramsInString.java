@@ -32,7 +32,7 @@ class FindAllAnagramsInString {
 
     /*
         two pointer with window length of p.length().
-        counter only increments/decrements for number occurance of char in P.
+        counter only increments for numbers of  occurance of char in P.
         In this case, when counter reach 0, we know we found one.
      */
     public List<Integer> findAnagramsOnAlgo(String s, String p) {

@@ -1,5 +1,8 @@
 import java.util.*;
 
+//BB
+// binary search then two pointer
+// logn + k
 class FindKClosestElements {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
         int pos = Arrays.binarySearch(arr, x);

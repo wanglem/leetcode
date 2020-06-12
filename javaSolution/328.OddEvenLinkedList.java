@@ -2,11 +2,6 @@
 // can keep two list, odd list and even list
 // then concat.
 class OddEvenLinkedList {
-    public class ListNode {
-      int val;
-      ListNode next;
-      ListNode(int x) { val = x; }
-    }
     public ListNode oddEvenList(ListNode head) {
         ListNode odd = new ListNode(0);
         ListNode even = new ListNode(0);
@@ -25,6 +20,7 @@ class OddEvenLinkedList {
             head = head.next;
         }
         oddI.next = even.next;
+        evenI.next=  null;
         return odd.next;
     }
 }

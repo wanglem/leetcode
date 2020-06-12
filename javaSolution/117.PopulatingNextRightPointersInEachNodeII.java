@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
+// BB
 class PopulatingNextRightPointersInEachNodeII {
     private class Node {
         public int val;
@@ -25,17 +26,15 @@ class PopulatingNextRightPointersInEachNodeII {
         if (root == null) return null;
         Queue<Node> level = new LinkedList<>();
         level.offer(root);
-        level.offer(null);
         while (!level.isEmpty()) {
-            Node left = level.poll();
-            if (left.left != null) level.offer(left.left);
-            if (left.right != null) level.offer(left.right);
-            left.next = level.peek();
-
-            if (level.peek() == null) {
-                level.poll();
-                if (level.size() > 0) level.offer(null);
+            int size = level.size();
+            while (size-- > 0) {
+                Node left = level.poll();
+                if (size > 0) left.next = level.peek();
+                if (left.left != null) level.offer(left.left);
+                if (left.right != null) level.offer(left.right);
             }
+
         }
         return root;
     }

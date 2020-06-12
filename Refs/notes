@@ -12,6 +12,63 @@ sum 等差数列
 -------------
       2
 
+
+https://medium.com/@morefree7/design-a-distributed-web-crawler-f67a8ebb8336
+Distributed Web Crawler
+
+Chord DHT (Distributed Hash Table)
+    - p2p protocal, same as DynamoDB used
+    - Consistent hashing of node "ipAddr:port" as NodeId, place it on key-ring.
+    - maitain a "finger table", NodeId, NodeId+2^0,..., NodeId+2^k till reach a circle.
+    - replication to next 2 neighbors
+    - Add node: Introducor add new node N to N-1, N mark N-1 as its successor.
+    - Delete node: if N not found, try find its successor. (maintain successor list of each node)
+    - syncrhonization mechanism to sync finger table (add/delete node) - O(logN), get/write operation O(logN) hops.
+
+DynamoDB:
+    - Virtual nodes for logical partiiton, physical nodes on virtual ones
+        - balanced data (i.e. hot key ranges)
+        - data evenly distributed when node joins/leaves
+        - Only run background process (i.e. key copies) when system not busy
+    - Partitioning:
+        - By Token Range: Each node handles keys falling into that a key range.
+            - partitions are dynamically calculated (good and bad)
+        - By Key Range: Each nodes randomly assigned with equal sized partitions.
+            - partition and placement are independent.
+            - node joins/leaves - steals/re-assigns partitions chunks
+    - Gossip based communication, info exchanged during regular comm
+    - Hinted handoff for temp failure. A-B-C-D Ring with replica factor 3.
+        - If Node A is down, Keys for [A, B, C] are not sent to D, D is hinted that A/B/C is down.
+        - D store new keys separted and periodically check.
+        - If A is back, send local replica back to A, then delete it.
+    - Merkle Tree (each node has HashValue of its children), compare root to check if whole data are the same
+    - Failure detection:
+        - Decentralized: Gossip based while forwarding requests
+        - Centralized: glabal view is better for explicit node join/leave, still Gossip to propogate state.
+    - Node join (Similar to node leave):
+        - Randomly spread to Ring. Request successors to forward keys out of range.
+    - Client-driven v.s. Server-driven coordination
+        - read request can be coordinated by any nodes
+        - write must be on preference list for vector clock.
+        - client-driven for better performance (less hops), no LB needed, but requires stateful client (node membership meta).
+
+DynamoDB Cont'd: 
+    Partitioning
+        - Consistent Hashing
+        - Incremental Scalability
+    High Availability for writes
+        - Vector clocks with reconciliation during reads
+        - Version size is decoupled from update rates.
+    Handling temporary failures
+        - Sloppy Quorum (R (read nodes) + W (write nodes) > N (total nodes)) and hinted handoff
+        - Provides high availability and durability guarantee when some of the replicas are not available.
+    Recovering from permanent failures
+        - Anti-entropy using Merkle trees
+        - Synchronizes divergent replicas in the background.
+    Membership and failure detection
+        -  Gossip-based membership protocol and failure detection.
+        - Preserves symmetry and avoids having a centralized registry for storing membership and node liveness information.
+
 Tree Traversal
     1. *InOrder*: Binary Search Tree Order
     2. PreOrder: All the way to left. mid first, then left, then right
@@ -137,3 +194,7 @@ Java negative number:
         2a. -1 is 1111 1111
         2b. -3 is 1111 1101 (-2)
         2c. so -N is -1-(N-1)
+
+https://ai.googleblog.com/2017/04/consistent-hashing-with-bounded-loads.html
+Consistent Hashing with Bounded Loads
+    - helps with balance load when frequently add/remove nodes

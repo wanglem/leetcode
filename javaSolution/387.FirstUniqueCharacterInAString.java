@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.Comparator;
 
+// BB
 class FirstUniqueCharacterInAString {
     public int firstUniqChar(String s) {
         int[][] count = new int[26][2];

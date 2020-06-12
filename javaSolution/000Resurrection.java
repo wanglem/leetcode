@@ -1,51 +1,55 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-class Resurrection {
-    public List<List<Integer>> subsetsWithDup(int[] nums) {
-        Arrays.sort(nums);
+import java.io.*;
 
-        List<List<Integer>> res = new ArrayList<>();
-        for (int i = 2; i < nums.length; i++) {
-            res.addAll(subsetsK(nums, 0, i));
-        }
+class MyCode {
+    private static Stack<Integer> path;
 
-        res.add(Collections.emptyList());
-        if (nums.length > 1) {
-            res.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
-        }
-        for (int i = 0; i < nums.length; i++) {
-            if (i != nums.length - 1 && nums[i] == nums[i+1]) continue;
-            res.add(Collections.singletonList(nums[i]));
-        }
+    public static void main(String[] args) {
+        List<Integer> testInput0 = new ArrayList<Integer>();
+        List<Integer> testInput1 = new ArrayList<Integer>();
+        List<Integer> testInput2 = new ArrayList<Integer>();
+        testInput0.add(2);
+        testInput0.add(4);
+        testInput0.add(1);
+        testInput0.add(1);
+        testInput0.add(0);
+        testInput0.add(4);
+        testInput2.add(1);
+        testInput2.add(1);
+        testInput2.add(1);
+        testInput2.add(2);
+        testInput2.add(0);
+        testInput2.add(1);
 
-        return res;
+        System.out.println(canReachEnd(testInput0)); // 0, 1
+        // System.out.println(canReachEnd(testInput1)); // empty
+        // System.out.println(canReachEnd(testInput2)); // 0, 1, 2, 3
+
     }
 
-    private List<List<Integer>> subsetsK(int[] nums, int start, int K) {
-        if (start >= nums.length) return Collections.emptyList();
-
-        List<List<Integer>> res = new ArrayList<>();
-        if (K == 1) {
-            for (int i = start; i < nums.length; i++) {
-                if (i == start || nums[i] != nums[i-1]) {
-                    res.add(Collections.singletonList(nums[start++]));
-                }
-            }
-            return res;
+    public static List<Integer> canReachEnd(List<Integer> list) {
+        path = new Stack<Integer>();
+        if (list.size() > 0) {
+            findPath(0, list);
         }
+        return new ArrayList<>(path);
+    }
 
-        for (int i = start; i < nums.length; i++) {
-            if (i != start && nums[i] == nums[i-1]) continue;
-            List<List<Integer>> tailList = subsetsK(nums, i+1, K-1);
-            for (List<Integer> tail: tailList) {
-                List<Integer> sub = new ArrayList<>();
-                sub.add(nums[i]);
-                sub.addAll(tail);
-                res.add(sub);
-            }
+// input = { 2,4,1,1,0,4 }
+// input = { 2,1,0,4 }
+
+    private static boolean findPath(int startIdx, List<Integer> list) {
+        if (startIdx >= list.size() - 1) return true;
+        path.push(startIdx);
+        int steps = list.get(startIdx);
+        for (int i = startIdx + steps; i > startIdx; i--) {
+            boolean reached = findPath(i, list);
+            if (reached) return true;
         }
+        path.pop();
 
-        return res;
+        return false;
     }
 }

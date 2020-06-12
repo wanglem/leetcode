@@ -2,6 +2,32 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 class VerticalOrderTraversalBinaryTree {
+    private TreeMap<Integer, PriorityQueue<int[]>> bucket = new TreeMap<>();
+    public List<List<Integer>> verticalTraversal2(TreeNode root) {
+        helper(root, 0, 0);
+        List<List<Integer>> res = new ArrayList<>();
+
+        for (Map.Entry<Integer, PriorityQueue<int[]>> e: bucket.entrySet()) {
+            List<Integer> line = new ArrayList<>();
+            PriorityQueue<int[]> pq = e.getValue();
+            while (!pq.isEmpty()) line.add(pq.poll()[1]);
+            res.add(line);
+        }
+
+        return res;
+    }
+
+    private void helper(TreeNode root, int x, int y) {
+        if (root == null) return;
+        bucket.putIfAbsent(y,  new PriorityQueue<>((a, b) -> {
+            if (a[0] != b[0]) return Integer.compare(b[0], a[0]);
+            return Integer.compare(a[1], b[1]);
+        }));
+        bucket.get(y).offer(new int[]{x, root.val});
+        helper(root.left, x-1, y-1);
+        helper(root.right, x-1, y+1);
+    }
+    
     private class IndexedNode {
         TreeNode r;
         int vertical;

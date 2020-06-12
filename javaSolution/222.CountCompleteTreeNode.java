@@ -1,16 +1,10 @@
-// Google
+// Google, BB
 /*
     1. count left most and right most branch. keep counter if their lengths do not match.
     2. when match, we know height of tree, counter is the extra nodes.
     3. height H, full tree nodes are: 2^H - 1.
  */
 class CountCompleteTreeNode {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
     public int countNodes(TreeNode root) {
         TreeNode left = root;
         TreeNode right = root;

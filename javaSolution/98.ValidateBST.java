@@ -1,12 +1,6 @@
 import java.util.Stack;
 
 class ValidateBST {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
     public boolean isValidBST(TreeNode root) {
         if (root == null) return true;
         return validateBST(root, null, null);
@@ -45,5 +39,17 @@ class ValidateBST {
             node = cur.right;
         }
         return false;
+    }
+
+    private Integer last = null;
+    public boolean isValidBSTRecursive(TreeNode root) {
+        if (root == null) return true;
+        boolean leftValid = isValidBST(root.left);
+        if (!leftValid) return false;
+        if (last != null && last >= root.val) {
+            return false;
+        }
+        last = root.val;
+        return isValidBST(root.right);
     }
 }
