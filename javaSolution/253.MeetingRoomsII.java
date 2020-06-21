@@ -3,7 +3,8 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
-
+ FB?
+ cound num of rooms needed
  */
 class MeetingRoomsII {
 

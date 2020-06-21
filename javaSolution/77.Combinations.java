@@ -5,6 +5,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+// find distinct k numbers from [1 - n]
 class Combinations {
     public List<List<Integer>> combine(int n, int k) {
         return getCombo(n, 1, k);

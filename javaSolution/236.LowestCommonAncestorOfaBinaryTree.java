@@ -1,4 +1,5 @@
-class LCATree {
+// FB
+class LowestCommonAncestorOfaBinaryTree {
     private TreeNode lca = null;
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         findLCA(root, p, q);

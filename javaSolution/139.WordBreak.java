@@ -27,6 +27,7 @@ Example 3:
 Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 Output: false
  */
+// FB, DP
 class WordBreak {
     public boolean wordBreak(String s, List<String> wordDict) {
         Set<String> dict = new HashSet<>(wordDict);

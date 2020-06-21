@@ -13,9 +13,6 @@ sum 等差数列
       2
 
 
-https://medium.com/@morefree7/design-a-distributed-web-crawler-f67a8ebb8336
-Distributed Web Crawler
-
 Chord DHT (Distributed Hash Table)
     - p2p protocal, same as DynamoDB used
     - Consistent hashing of node "ipAddr:port" as NodeId, place it on key-ring.
@@ -198,3 +195,9 @@ Java negative number:
 https://ai.googleblog.com/2017/04/consistent-hashing-with-bounded-loads.html
 Consistent Hashing with Bounded Loads
     - helps with balance load when frequently add/remove nodes
+
+
+Spark Exactly Once:
+    - WAL for replay
+    - RDD for replication - resilience
+    - idempotent sink

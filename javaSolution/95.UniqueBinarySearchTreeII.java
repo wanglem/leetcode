@@ -5,12 +5,6 @@ import java.util.List;
 // generate all possible BST from 1 to n
 // use each i between [1,n] as root, recursively generate left(1, i) and right(i, n)
 class UniqueBinarySearchTreeII {
-    public class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode(int x) { val = x; }
-    }
     public List<TreeNode> generateTrees(int n) {
         if (n == 0) return new ArrayList<>();
         return generateTreesBetween(1, n);

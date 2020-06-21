@@ -7,11 +7,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        List<List<String>> e = new ArrayList<>();
-        e.add(Arrays.asList("Gabe","Gabe0@m.co","Gabe3@m.co","Gabe2@m.co"));
-        e.add(Arrays.asList("Gabe","Gabe3@m.co","Gabe4@m.co","Gabe2@m.co"));
 
-        p(new AccountsMerge().accountsMerge(e));
+        p(new BasicCalculatorII().calculate("3/2"));
 
     }
 

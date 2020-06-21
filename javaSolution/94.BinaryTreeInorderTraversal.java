@@ -24,19 +24,16 @@ class BinaryTreeInorderTraversal {
     List<Integer> stack(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         Stack<TreeNode> buf = new Stack<>();
-        while (root != null) {
-            buf.push(root);
-            root = root.left;
-        }
-        while (!buf.isEmpty()){
-            TreeNode prev = buf.pop();
-            res.add(prev.val);
-            TreeNode right = prev.right;
-            while (right != null) {
-                buf.push(right);
-                right = right.left;
+        while (root != null || !buf.isEmpty()) {
+            while (root != null) {
+                buf.push(root);
+                root = root.left;
             }
+            TreeNode last = buf.pop();
+            res.add(last.val);
+            root = last.right;
         }
+
         return res;
     }
 

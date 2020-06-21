@@ -7,6 +7,8 @@
         1. `previous` node is definitely wrong, record it in `one`.
         2. `current` node may or may not wrong, record it in `two` until find the second "definitely" wong one.
  */
+// From obsevation, swap two elements in an sorted array, first wrong
+// element N[i] is always larger than N[i+1].
 class RecoverBinarySearchTree {
     private TreeNode one;
     private TreeNode two;

@@ -3,6 +3,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
+// Interleaving s1 and s2 to form s3.
 class InterleavingString {
     /*
         DP method.

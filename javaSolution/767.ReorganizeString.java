@@ -1,6 +1,10 @@
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+
+// FB
+// re-order so no two same chars are neighbors
+// Priority Queue. Greedy.
 class ReorganizeString {
     
     public String reorganizeString(String S) {

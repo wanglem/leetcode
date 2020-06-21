@@ -38,4 +38,28 @@ class PopulatingNextRightPointersInEachNodeII {
         }
         return root;
     }
+
+    public Node connectNoSpace(Node root) {
+        Node up = root;
+        Node down = new Node(0);
+        Node downHead = down;
+        while (up != null) {
+            if (up.left != null) {
+                down.next = up.left;
+                down = down.next;
+            }
+            if (up.right != null) {
+                down.next = up.right;
+                down = down.next;
+            }
+
+            up = up.next;
+            if (up == null) {
+                up = downHead.next;
+                down = new Node(0);
+                downHead = down;
+            }
+        }
+        return root;
+    }
 }

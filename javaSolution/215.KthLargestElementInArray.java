@@ -4,7 +4,9 @@ import java.util.PriorityQueue;
 /*
     difference of using minHeap v.s. maxHeap is time complexity at extreme case.
     when k is very close to n, or k is much smaller than n (constant k).
+    heap(O(NlogK)) v.s. quick selection (best O(n), avg O(nLogn), worst O(n^2))
  */
+// FB
 class KthLargestElementInArray {
     public int findKthLargest(int[] nums, int k) {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(nums.length, Collections.reverseOrder());

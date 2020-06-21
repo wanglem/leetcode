@@ -1,5 +1,4 @@
-import java.util.Arrays;
-
+// FB
 class SearchInRotateArray {
     public int search(int[] nums, int target) {
         int pivot = findSmallestIndex(nums);

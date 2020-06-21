@@ -4,6 +4,8 @@
     1. Basically find [a, b, c]. loop array and say index `i` build the middle one - b
     2. then find max from [0, i] as a, [i+k, n] as c.
     3. build presum array and post sum array to speed up step 2.
+
+    O(n) Algo
  */
 class MaximumSumOf3NonOverlapSubarray {
     public int[] maxSumOfThreeSubarrays(int[] nums, int k) {

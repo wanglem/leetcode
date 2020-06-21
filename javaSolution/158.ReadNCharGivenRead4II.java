@@ -5,6 +5,7 @@ import java.util.Queue;
  * The read4 API is defined in the parent class Reader4.
  *     int read4(char[] buf);
  */
+// FB
 class ReadNCharGivenRead4II {
 
     private Queue<Character> readBuf = new LinkedList<>();

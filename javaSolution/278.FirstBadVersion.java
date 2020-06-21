@@ -1,6 +1,7 @@
 /* The isBadVersion API is defined in the parent class VersionControl.
       boolean isBadVersion(int version); */
 
+// FB
 class FirstBadVersion {
     public int firstBadVersion(int n) {
         int i = 0, j = n;

@@ -1,0 +1,158 @@
+Step 1: Requirement Clarification
+    - Use cases, features, regionalization etc.
+
+Step 2: Back-of-the-envelope estimation (optional)
+    - # users, DAU, writes/day, reads/day
+
+Step 3: System Interface Definition
+    - eg twitter:
+        - postTweet(uid, content, ts ...)
+        - timeline(uid, ts ...)
+        - follow(uid1, uid2)
+
+Step 4: Define Data Model
+    - i.e. Table schemas
+
+Step 5: High-level design
+
+Step 6: Detailed design (2/3 major components)
+
+Step 7: Identify and resolve bottlenecks
+    - single point failure
+    - data loss
+    - performance degrade
+    - monitoring etc.
+- Hotspots
+- Single master down
+- Scale up/ scale down
+
+
+Some quick numbers:
+    - Memory: 4GB/s
+    - Network (same region): 1Mb -> 10ms
+    - Disk: 1Mb -> 30ms
+    - within DC round trip: 0.5ms
+    - cross region round trip: 150ms
+    - 1 day == 86500 (100k) seconds
+    - Read:Write ratio: 10:1, 100:1
+    - Caching: 20% of Daily traffic (80-20 rule)
+    - 100MM Users
+        - 10MM DAU
+        - 10MM Writes/Day ~100 QPS
+        - 1000MM Reads/Day ~10K QPS
+
+Powers of 2 table:
+    - 10: 1 thousand, 1KB
+    - 20, 1 million,  64KB
+    - 30, 1 billion,  1GB
+    - 40, 1 trillion, 1TB
+
+Cassandra (Append only mutation)
+Data Management:
+    1. CommitLog/WAL, recover MemTable in case of failure.
+    2. MemTable - in memory table for most recently read/write
+    3. SSTable - Files by flushing MemTable to disk. BloomFilter for fast check `containsKey`.
+    4. Table - Merge SSTable together.
+Failure:
+    1. Gossip to spread ring membership (add/delete ring).
+    2. heartbeats of neighbors to detect failure (UP/DOWN).
+Hotspots:
+    1. Composite keys to avoid hot spots
+
+
+GFS notes:
+    - 64MB chunk. Space for mutation. Large size for reduced comm to master.
+    - Single master for all MetaData, 64bytes for 64mb chunk, 64bytes for file namespace.
+    - Master do not persist meta. Asks chunk server on start, and periodically. Consistency.
+    - Operation log (WAL). Order of actions. Flush in batch. Also used for recovery combined with checkpointing.
+    Write Flow:
+        - Client ask master for Primary/list of replicas
+        - Client sends data to all replica and primary, in any order
+        - Client send commit to Primary, primary commit all replicas, and connect offset of chunks.
+        - Chunks can be duplicate (at least once). Offsets monotonic increasing
+    Master:
+        - Store files -> List[Chunk Server] mapping
+        - Namespace management, Locking
+        - Creation, re-replication, rebalancing
+        - chunk version number to detect stale replica
+        - Shadow master (may lag) provide read-only when master is down
+    Checksum:
+        - Generate checksum of each 64KB block at write time
+        - compare when read.
+        - report to master when not match
+    
+
+Resources:
+    - https://github.com/donnemartin/system-design-primer
+    - https://medium.com/@morefree7/design-a-distributed-web-crawler-f67a8ebb8336
+      Distributed Web Crawler
+    - https://redis.io/topics/distlock
+      Redis Distributed Lock
+
+
+Examples:
+TinyURL:
+    - Lazy URL deletion - delete at Read time. Offline deletion at idle time.
+
+Instagram/Twitter:
+    - PhotoID generation -  two master, odd/even IDs. For Availability.
+    - DB Sharding:
+        By User:
+            Good: Simple query by user, less query generate timeline.
+            Bad: Hot users; some users with lots of messages/tweets/photos/followers - bad distribution.
+        By PhotoId/TweetId/MessagesId:
+            Good: Good distribution.
+            Bad: Search needs query all DB.
+        By Composite [CreationTime, PhotoId/TweetId/MessageId]
+            - much faster to search latest data - for timeline generation
+            - even distribution data
+            - Bad: still ask all DB shards.
+    - Cache only past 3 days of data.
+
+DropBox:
+    - Break down to small file chunks - easy retry, smaller updates (e.g. 1MB)
+    - Local metadata cache saves network roundtrips (files/user is not super high)
+    - (Only estimate storage, no QPS)
+    - HTTP Long polling (wait-till-respond) for cross-device meta sync
+    - Client, metaDB, sync service, object store
+    - 1 queue per subcriber, sync service to fan-out (use Redis as queue) update deltas (1MB granularity)
+    - control flow and data flow
+    - file chunk dedupe: post-process for faster uploads v.s. runtime for optimal network/storage
+    - Vertical shard (slow join, hot table), horizontal range shard (Hot range), Hash-based shard (complex).
+
+Web Crawler
+    - BFS(simple, URL equal)/DFS(optimized/live conn for same domain)? isolated web groups? frequent web changes?
+    - dedupe url, dedupe document (same page under multiple urls)?
+    - DNS pressure, cache locally?
+    - 1B url * (100KB page + 100B meta) = 100TB, 1B url / (100K (~ sec/day)) = 1MM/s QPS
+
+
+https://engineering.linkedin.com/blog/2018/01/now-you-see-me--now-you-dont--linkedins-real-time-presence-platf
+FB/Linkedin Messenger
+    - 1:1 chat, online/offline status, chat history persistence, read receipt? encryption? media?
+    - 100MM DAU, 100MM*20msg = 2B/day * 100Byte = 200GB/day / 100K = 2MB/s
+    - ClientA -> Web Server -> Chat Server -> ClientB (real-time service)
+                        Receipt   <-|-> Chat DB History
+    - MessageId for ordering, conversationId for fan-out.
+    - Sharding by UserID. By MessageID is not good cuz we need range of messages.
+    - store encryption key/user if needed
+    - send heardbeats for d seconds. 1 received means online. for lossy conn. (presence table/service).
+        - if no/expired entry in presence table, then user just log online -> push status to friends.
+        - Presence Service, runs timer of online members. keep updating when online. Fires when offline.
+            - Consistent Hash on userId to route time to same node.
+
+
+https://medium.com/codait/handling-failure-successfully-in-rabbitmq-22ffa982b60f
+Youtube:
+    - Upload, View, Video Processing, thumbnail, metadata, video media store
+    - Processor reads from queue:
+        1. Same Queue Server, poll Pending queue and move to InProgress queue/table.
+            - if timeout on ack InProgress, requeue, attempt++.
+            - if requeue K times, move to DLQ
+        2. Bad message direct to DLQ
+        3. Queue overflow redirect to DLQ
+        4. Reroute DLQ to Queue for speculation retry. If fail, move to log.
+    
+
+    
+    
