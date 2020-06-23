@@ -1,3 +1,4 @@
+
 class ValidPalindrome {
     public boolean isPalindrome(String s) {
         int i = 0, j = s.length() - 1;

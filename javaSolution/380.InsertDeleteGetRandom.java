@@ -8,6 +8,14 @@ import java.util.*;
         O(1) delete for swapping with last value.
 
     Using HashMap to record element location (index in array).
+
+    Follow up: elements are weighted, getRandom should consider weights:
+        1. sum all weights -> weightSum
+        2. get a random number between [0, weightSum] -> rand
+        3. loop through element weight -> i
+            a. if rand < weights[i], return i
+            b. rand -= weights[i]
+            c. continue step 3.
  */
 class RandomizedSet {
 

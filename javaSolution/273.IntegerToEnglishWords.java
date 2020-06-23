@@ -25,7 +25,7 @@ class IntegerToEnglishWords {
         return String.join(" ", words);
     }
 
-    private LinkedList<String> convertThreeDigit(int n) {// require n > 0
+    private LinkedList<String> convertThreeDigit(int n) {
         LinkedList<String> res = new LinkedList<>();
         if (n == 0) {
             return res;

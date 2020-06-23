@@ -96,6 +96,7 @@ TinyURL:
 
 Instagram/Twitter:
     - PhotoID generation -  two master, odd/even IDs. For Availability.
+        - Or: Allocator service, send key batchs to each server. Server either persist keys or mem only (ok to lose).
     - DB Sharding:
         By User:
             Good: Simple query by user, less query generate timeline.
@@ -111,20 +112,23 @@ Instagram/Twitter:
 
 DropBox:
     - Break down to small file chunks - easy retry, smaller updates (e.g. 1MB)
-    - Local metadata cache saves network roundtrips (files/user is not super high)
+    - Client local metadata cache saves network roundtrips (files/user is not super high)
     - (Only estimate storage, no QPS)
     - HTTP Long polling (wait-till-respond) for cross-device meta sync
     - Client, metaDB, sync service, object store
     - 1 queue per subcriber, sync service to fan-out (use Redis as queue) update deltas (1MB granularity)
     - control flow and data flow
     - file chunk dedupe: post-process for faster uploads v.s. runtime for optimal network/storage
-    - Vertical shard (slow join, hot table), horizontal range shard (Hot range), Hash-based shard (complex).
+    - Vertical shard, server -> table (slow join, hot table), horizontal range shard (Hot range), Hash-based shard (complex).
 
 Web Crawler
     - BFS(simple, URL equal)/DFS(optimized/live conn for same domain)? isolated web groups? frequent web changes?
     - dedupe url, dedupe document (same page under multiple urls)?
     - DNS pressure, cache locally?
     - 1B url * (100KB page + 100B meta) = 100TB, 1B url / (100K (~ sec/day)) = 1MM/s QPS
+    - P2P service:
+        - Network Overlay: each node maintains a set of links to other nodes.
+        - Chord DHT
 
 
 https://engineering.linkedin.com/blog/2018/01/now-you-see-me--now-you-dont--linkedins-real-time-presence-platf
@@ -137,6 +141,7 @@ FB/Linkedin Messenger
     - Sharding by UserID. By MessageID is not good cuz we need range of messages.
     - store encryption key/user if needed
     - send heardbeats for d seconds. 1 received means online. for lossy conn. (presence table/service).
+        - client sends heartbeats so server stateless. server sends it for better control, all logics are on server side.
         - if no/expired entry in presence table, then user just log online -> push status to friends.
         - Presence Service, runs timer of online members. keep updating when online. Fires when offline.
             - Consistent Hash on userId to route time to same node.
@@ -153,6 +158,36 @@ Youtube:
         3. Queue overflow redirect to DLQ
         4. Reroute DLQ to Queue for speculation retry. If fail, move to log.
     
+Rate Limiter
+    - fixed window v.s. sliding window
+    - fixed window: windowKey -> count; sliding window: Redis Sorted set store timestamps
+    - combined: counter at second granularity, maintain 60 counters for minute level rate limiting.
+    - By IP (bad: shared public IP, DDOS. good: no Uid) / User(Bad: Hacker DOS a User. Good: precise rate limit).  -> use combined
+    
+Twitter Search:
+    - Index server with KeyWord -> List[TweetId].
+    - Fault Tolerance:
+        1. Replica;
+        2. All dead. Rescan whole DB is expensive. Instead: rebuild index with reverse index - IndexServer -> List[TweetId].
+        3. Regularly backup to disk?
 
+TypeAhead:
+    - HashTable (simple, easy to scale, bad when updates) v.s. Trie (complex, R/W fast, harder to scale)
+    - Logging - log all queries, or sample 1/1k.
+    - MR update: 1. compute offline then swap; 2. master-slave - update slave, then master; 3. update master, propogate to slaves
+    - Delete: offline delete, API layer filter out.
+    - Partition
+        - Range based with first letter: Hotspots - phrases start with "what"
+        - Vertical: by prefix and server capacity (each server has a few trie branchs). Bad: still not solving hotspots.
+            - Query could go to multiple servers share same prefix. External service for sort and merge.
+        - By phrases: even partition, but N queries for searching.
     
-    
+
+MISC:
+    - When sharding: Either hashByKey (or Range based) and find server directly (hotspots);
+        Or HashBy object and query all servers then merge (network bandwidth).
+    - Indexing/Search Server failure -> 1. replica; 2. reverse index server for fast recovery. i.e. ServerId -> List[LocationId/TweetId]
+    - Cassandra v.s. Redis
+        - Cassandra: Availibility & Partition Tolerance; Redis: Consistency & Partiiton
+        - Cassandra: wide column, big size; Redis: KV store, limited scalability
+        - Cassandra: tuneable R,W,N; Redis: master-slave

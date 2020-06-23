@@ -2,12 +2,6 @@ import java.util.*;
 
 // FB
 class BinaryTreeRightSideView {
-    public class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode(int x) { val = x; }
-  }
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> rightSide = new ArrayList<>();
         if (root == null) {
@@ -31,5 +25,24 @@ class BinaryTreeRightSideView {
             }
         }
         return rightSide;
+    }
+
+
+    // O1 Space, DFS
+    // right first, then left
+    public List<Integer> rightSideViewDFS(TreeNode root) {
+        List<Integer> rightSide = new ArrayList<>();
+        dfs(root, rightSide, 0);
+        return rightSide;
+    }
+    private void dfs(TreeNode root, List<Integer> rightSide, int depth) {
+        if (root == null) return;
+
+        if (depth == rightSide.size()) {
+            rightSide.add(root.val);
+        }
+
+        dfs(root.right, rightSide, depth+1);
+        dfs(root.left, rightSide, depth+1);
     }
 }

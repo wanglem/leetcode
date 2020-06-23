@@ -1,8 +1,9 @@
 import java.util.*;
 
 // fb
-// merge email accounts
+// merge email accounts, same email means one account
 // not difficult, but hard to write, easy bugs
+//  i.e. [["John", "johnsmith@mail.com", "john00@mail.com"]]
 class AccountsMerge {
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
         Map<String, Integer> emailToId = new HashMap<>();

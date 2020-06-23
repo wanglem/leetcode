@@ -1,3 +1,6 @@
+// 1p3a FB
+// all positive
+// Followup: negative case see 862
 class MinSizeSubarraySum {
     public int minSubArrayLen(int s, int[] nums) {
         if (nums.length == 0) {

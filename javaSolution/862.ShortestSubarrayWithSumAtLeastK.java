@@ -7,6 +7,9 @@ import java.util.LinkedList;
         If decreasing: sum[i+1] <= sum[i], then sum[i] with previous whatever index is definitely shorter.
     Queue is increasing, pop first can get minLength if sum >= K.
  */
+
+// This can include both positive/negative numbers.
+// only positive use two pointers is sufficient. See 209.
 class ShortestSubarraywithSumatLeastK {
     public int shortestSubarray(int[] A, int K) {
 

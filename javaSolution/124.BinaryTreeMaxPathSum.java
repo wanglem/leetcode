@@ -1,12 +1,6 @@
 // FB
 // max path sum from any node to another node, no need to pass root
 class BinaryTreeMaxPathSum {
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-        TreeNode(int x) { val = x; }
-    }
     private int maxSum = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
         traverse(root);
